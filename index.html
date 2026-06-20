@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Website of Pakistan · Pro Agency</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0B0E17;
+      color: #FFFFFF;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    :root {
+      --bg-primary: #0B0E17;
+      --bg-secondary: #0F121C;
+      --bg-card: #131724;
+      --bg-elevated: #1A1F2E;
+      --border-subtle: #2A303E;
+      --text-primary: #FFFFFF;
+      --text-secondary: #B0B7D4;
+      --text-muted: #6C729E;
+      --accent-green: #2ECC71;
+      --accent-green-dark: #27AE60;
+      --accent-glow: #58D68D;
+      --accent-gradient: linear-gradient(135deg, #27AE60 0%, #2ECC71 80%, #A9DFBF 100%);
+      --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
+      --shadow-md: 0 8px 24px rgba(0,0,0,0.4);
+      --shadow-xl: 0 25px 40px -12px rgba(0,0,0,0.5);
+      --border-radius: 4px;
+      --transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    }
+    .container { width: 90%; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
+    section { padding: 100px 0; position: relative; }
+    h1,h2,h3,h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
+    h2 {
+      font-size: 2.8rem;
+      margin-bottom: 1rem;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+    }
+    .section-header { margin-bottom: 60px; }
+    .section-header p { color: var(--text-secondary); font-size: 1.2rem; max-width: 600px; margin-top: 12px; }
+    .loader-wrapper {
+      position: fixed; top:0; left:0; width:100%; height:100%;
+      background: var(--bg-primary); display:flex; justify-content:center; align-items:center;
+      z-index:10000; transition: opacity 0.6s ease;
+    }
+    .loader { width:60px; height:60px; border:3px solid var(--border-subtle); border-top:3px solid var(--accent-green); border-radius:50%; animation: spin 1s cubic-bezier(0.68,-0.55,0.265,1.55) infinite; box-shadow:0 0 15px rgba(46,204,113,0.3); }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    header {
+      position: fixed; top:0; width:100%; z-index:1000;
+      background: rgba(11,14,23,0.85); backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+      transition: var(--transition);
+    }
+    header.scrolled { background: rgba(11, 14, 23, 0.082); }
+    .nav-container { display:flex; justify-content:space-between; align-items:center; height:70px; }
+    .logo {
+      font-size:1.8rem; font-weight:800; letter-spacing:-0.5px; text-decoration:none; display:flex; align-items:center; gap:8px;
+    }
+    .logo img {
+      height: 70px;
+      width: auto;
+      display: block;
+    }
+    .nav-menu { display:flex; gap:2rem; list-style:none; align-items:center; }
+    .nav-link { font-weight:500; color:var(--text-secondary); transition:var(--transition); font-size:0.95rem; text-decoration:none; position:relative; }
+    .nav-link::after { content:''; position:absolute; bottom:-6px; left:0; width:0%; height:2px; background:var(--accent-gradient); transition:0.3s; }
+    .nav-link:hover::after, .nav-link.active::after { width:100%; }
+    .nav-link:hover, .nav-link.active { color:var(--accent-green); }
+    .hamburger { display:none; flex-direction:column; gap:6px; cursor:pointer; z-index:1001; }
+    .bar { width:28px; height:2px; background:white; transition:0.3s; }
+
+    /* Hero */
+    .hero { min-height:100vh; display:flex; align-items:center; position:relative; background:radial-gradient(circle at 80% 20%, rgba(46,204,113,0.08) 0%, rgba(11,14,23,0) 70%); padding-top:100px; }
+    .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
+    .hero-title { font-size:4rem; font-weight:800; line-height:1.1; background:linear-gradient(to right, #FFF, #A9DFBF); -webkit-background-clip:text; background-clip:text; color:transparent; animation:fadeInUp 0.8s ease; }
+    .hero-title .highlight { background:var(--accent-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; }
+    @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
+    .hero-badge { display:inline-block; background:rgba(46,204,113,0.15); backdrop-filter:blur(4px); padding:6px 14px; border-radius:var(--border-radius); font-size:0.8rem; margin-bottom:1.5rem; border:1px solid rgba(46,204,113,0.3); color:var(--accent-green); }
+    .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 32px; border-radius:var(--border-radius); font-weight:600; transition:var(--transition); cursor:pointer; border:none; text-decoration:none; }
+    .btn-primary { background:var(--accent-gradient); color:#0B0E17; box-shadow:0 8px 20px rgba(46,204,113,0.3); }
+    .btn-primary:hover { transform:translateY(-4px); box-shadow:0 15px 30px rgba(46,204,113,0.5); }
+    .btn-outline-light { background:transparent; border:1px solid rgba(255,255,255,0.2); color:white; }
+    .btn-outline-light:hover { background:rgba(46,204,113,0.1); border-color:var(--accent-green); transform:translateY(-4px); }
+    .hero-stats { display:flex; gap:2rem; margin-top:2rem; flex-wrap:wrap; }
+    .hero-stats div h4 { font-size:1.8rem; color:var(--accent-green); }
+    .hero-image-area { background:linear-gradient(135deg, #1A2A1A, #0F121C); border-radius:var(--border-radius); height:500px; box-shadow:var(--shadow-xl); border:1px solid rgba(46,204,113,0.15); position:relative; animation:fadeInRight 0.9s ease; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:2rem; }
+    .hero-image-area h3 { font-size:2.5rem; color:var(--accent-green); margin-bottom:1rem; }
+    @keyframes fadeInRight { from { opacity:0; transform:translateX(40px); } to { opacity:1; transform:translateX(0); } }
+
+    /* cards */
+    .service-card, .project-card, .portfolio-item { background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-subtle); transition:var(--transition); overflow:hidden; }
+    .service-card { padding:2rem; }
+    .service-card:hover, .project-card:hover { transform:translateY(-8px); border-color:var(--accent-green); box-shadow:var(--shadow-md); }
+    .services-grid, .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; }
+    .service-icon { width:64px; height:64px; background:rgba(46,204,113,0.12); border-radius:var(--border-radius); display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:var(--accent-green); margin-bottom:24px; transition:0.3s; }
+    .service-card:hover .service-icon { transform:scale(1.1); background:var(--accent-green); color:#0B0E17; }
+    .stats-modern { background:linear-gradient(135deg, #0B0E17 0%, #0F121C 100%); border-top:1px solid var(--border-subtle); border-bottom:1px solid var(--border-subtle); }
+    .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; text-align:center; }
+    .stat-number { font-size:3rem; font-weight:800; color:var(--accent-green); }
+
+    /* testimonial */
+    .testimonial-wrapper {
+      border-radius: var(--border-radius);
+    }
+    .testimonial-card-pro {
+      background: var(--bg-card);
+      border-radius: var(--border-radius);
+      padding: 2.2rem 2rem;
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition);
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      box-shadow: var(--shadow-sm);
+    }
+    .testimonial-card-pro:hover {
+      border-color: var(--accent-green);
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-md);
+    }
+    .testimonial-card-pro .quote-icon {
+      font-size: 2.2rem;
+      color: var(--accent-green);
+      opacity: 0.4;
+      margin-bottom: 1rem;
+    }
+    .testimonial-card-pro p {
+      color: var(--text-secondary);
+      font-size: 1.05rem;
+      line-height: 1.7;
+      flex: 1;
+      margin-bottom: 1.5rem;
+      font-style: italic;
+    }
+    .testimonial-card-pro .author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      border-top: 1px solid var(--border-subtle);
+      padding-top: 1.2rem;
+    }
+    .testimonial-card-pro .author-avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      color: #0B0E17;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .testimonial-card-pro .author-info h4 {
+      font-size: 1rem;
+      color: white;
+      margin-bottom: 2px;
+    }
+    .testimonial-card-pro .author-info span {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .testimonial-swiper .swiper-pagination-bullet {
+      background: var(--text-muted);
+    }
+    .testimonial-swiper .swiper-pagination-bullet-active {
+      background: var(--accent-green);
+    }
+
+    .whatsapp-float { position:fixed; bottom:28px; right:28px; background:#25D366; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; color:white; box-shadow:var(--shadow-md); z-index:99; transition:0.2s; text-decoration:none; }
+    .whatsapp-float:hover { transform:scale(1.1); background:#128C7E; }
+    .back-to-top { position:fixed; bottom:100px; right:28px; background:var(--accent-green); width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; visibility:hidden; transition:0.3s; z-index:99; box-shadow:var(--shadow-sm); border:none; color:#0B0E17; }
+    .back-to-top.active { opacity:1; visibility:visible; }
+    .back-to-top:hover { background:var(--accent-glow); transform:translateY(-5px); }
+
+    .cta-glow { background:radial-gradient(circle at 30% 10%, rgba(46,204,113,0.12), transparent); }
+    .footer-dark { background:#070A12; border-top:1px solid var(--border-subtle); margin-top:0; }
+    .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1.5fr; gap:40px; padding:60px 0 40px; }
+    .footer-logo { font-size:1.8rem; font-weight:800; margin-bottom:20px; display:inline-block; }
+    .footer-logo img {
+      height: 40px;
+      width: auto;
+      display: block;
+    }
+    .footer-about p { color:var(--text-muted); margin-bottom:24px; line-height:1.7; }
+    .social-links { display:flex; gap:16px; margin-top:20px; flex-wrap:wrap; }
+    .social-icon { width:40px; height:40px; background:rgba(255,255,255,0.05); border-radius:var(--border-radius); display:flex; align-items:center; justify-content:center; color:var(--text-secondary); transition:var(--transition); text-decoration:none; }
+    .social-icon:hover { background:var(--accent-green); color:#0B0E17; transform:translateY(-3px); }
+    .footer-title { font-size:1.2rem; font-weight:600; margin-bottom:24px; color:white; position:relative; }
+    .footer-links-list { list-style:none; }
+    .footer-links-list li { margin-bottom:12px; }
+    .footer-links-list a { color:var(--text-muted); text-decoration:none; transition:var(--transition); }
+    .footer-links-list a:hover { color:var(--accent-green); padding-left:5px; }
+    .footer-bottom { border-top:1px solid var(--border-subtle); padding:30px 0; text-align:center; color:var(--text-muted); font-size:0.9rem; }
+    .footer-contact-info { color:var(--text-secondary); font-size:0.95rem; }
+    .footer-contact-info i { color:var(--accent-green); width:24px; }
+    .form-input { width:100%; padding:14px 18px; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--border-radius); color:white; transition:0.2s; }
+    .form-input:focus { border-color:var(--accent-green); outline:none; box-shadow:0 0 0 3px rgba(46,204,113,0.2); }
+    .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; }
+    .price-tag { display:inline-block; background:rgba(46,204,113,0.15); padding:4px 14px; border-radius:var(--border-radius); font-size:0.75rem; color:var(--accent-green); border:1px solid rgba(46,204,113,0.2); }
+
+    /* Swiper arrows - always visible and functional */
+    .swiper-button-next, .swiper-button-prev {
+      color: var(--accent-green);
+      background: rgba(11,14,23,0.8);
+      width: 44px;
+      height: 44px;
+      border-radius: var(--border-radius);
+      backdrop-filter: blur(8px);
+      border: 1px solid var(--border-subtle);
+      transition: var(--transition);
+    }
+    .swiper-button-next::after, .swiper-button-prev::after {
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .swiper-button-next:hover, .swiper-button-prev:hover {
+      background: var(--accent-green);
+      color: #0B0E17;
+      border-color: var(--accent-green);
+    }
+    .swiper-pagination-bullet { background: var(--text-muted); }
+    .swiper-pagination-bullet-active { background: var(--accent-green); }
+
+    /* about graphic */
+    .about-graphic {
+      background: linear-gradient(145deg, #131724, #0F121C);
+      border-radius: var(--border-radius);
+      border: 1px solid var(--border-subtle);
+      padding: 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 300px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: var(--shadow-md);
+    }
+    .about-graphic .grid-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        linear-gradient(rgba(46,204,113,0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(46,204,113,0.05) 1px, transparent 1px);
+      background-size: 40px 40px;
+      z-index: 1;
+    }
+    .about-graphic .content {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+    .about-graphic .big-icon {
+      font-size: 4.5rem;
+      color: var(--accent-green);
+      opacity: 0.25;
+      margin-bottom: 1.5rem;
+    }
+    .about-graphic h3 {
+      font-size: 1.8rem;
+      color: white;
+      margin-bottom: 0.5rem;
+    }
+    .about-graphic p {
+      color: var(--text-secondary);
+      max-width: 400px;
+    }
+    .about-graphic .floating-dots {
+      display: flex;
+      gap: 12px;
+      margin-top: 1.5rem;
+    }
+    .about-graphic .floating-dots span {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      opacity: 0.3;
+      animation: pulse-dot 2s infinite alternate;
+    }
+    .about-graphic .floating-dots span:nth-child(2) { animation-delay: 0.4s; opacity: 0.5; }
+    .about-graphic .floating-dots span:nth-child(3) { animation-delay: 0.8s; opacity: 0.7; }
+    @keyframes pulse-dot { 0% { transform: scale(0.8); opacity: 0.2; } 100% { transform: scale(1.2); opacity: 0.8; } }
+
+    /* --- responsive fixes --- */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+    }
+    @media (max-width:992px) {
+      .hero-grid { grid-template-columns:1fr; gap:2rem; text-align:center; }
+      .hero-stats { justify-content:center; }
+      .hero-btns { justify-content:center; }
+      .stats-grid { grid-template-columns:repeat(2,1fr); }
+      .footer-grid { grid-template-columns:repeat(2,1fr); gap:30px; }
+      .nav-menu { position:fixed; left:-100%; top:80px; flex-direction:column; background:rgba(11,14,23,0.98); backdrop-filter:blur(20px); width:100%; transition:0.3s; padding:2rem; gap:1.5rem; align-items:flex-start; height:calc(100vh - 80px); overflow-y:auto; }
+      .nav-menu.active { left:0; }
+      .hamburger { display:flex; }
+      section { padding:70px 0; }
+      .hero { padding-top:90px; min-height:auto; }
+      .hero-image-area { height:320px; width:100%; margin-top:20px; }
+      .contact-grid { grid-template-columns:1fr; gap:40px; }
+      .about-graphic { min-height: 220px; }
+      .about-grid { gap:40px; }
+    }
+    @media (max-width:768px) {
+      .container { width:94%; padding:0 12px; }
+      h2 { font-size:2rem; }
+      .hero-title { font-size:2.5rem; }
+      .section-header { margin-bottom:40px; }
+      .services-grid, .portfolio-grid { gap:20px; }
+      .service-card { padding:1.5rem; }
+      .footer-grid { grid-template-columns:1fr; text-align:left; gap:40px; }
+      .footer-about p { max-width:100%; }
+      .social-links { justify-content:flex-start; }
+      .footer-title { text-align:left; }
+      .footer-links-list { text-align:left; }
+      .back-to-top { bottom:90px; right:20px; width:44px; height:44px; }
+      .whatsapp-float { right:20px; bottom:24px; width:50px; height:50px; }
+      .stats-grid { grid-template-columns:1fr; gap:30px; }
+      .contact-grid { grid-template-columns:1fr !important; gap:40px; }
+      .testimonial-wrapper { padding: 1.5rem 0.5rem; }
+      .swiper-button-next, .swiper-button-prev { width: 36px; height: 36px; }
+      .swiper-button-next::after, .swiper-button-prev::after { font-size: 14px; }
+      .about-grid { gap:30px; }
+      .hero { padding-top:85px; }
+    }
+    @media (max-width:576px) {
+      .container { width:100%; padding:0 8px; }
+      .hero-title { font-size:2rem; }
+      .btn { padding:12px 24px; font-size:0.9rem; }
+      .hero-stats div h4 { font-size:1.4rem; }
+      .stat-number { font-size:2.2rem; }
+      .about-grid {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .about-grid .about-graphic-wrapper {
+        display: none;
+      }
+      .footer-grid { text-align: left; }
+      .footer-links-list { text-align: left; }
+      .social-links { justify-content: flex-start; }
+      .hero { padding-top:80px; }
+      .hero-image-area { height:260px; }
+    }
+  </style>
+</head>
+<body>
+<div class="loader-wrapper"><div class="loader"></div></div>
+
+<a href="https://wa.me/923361871497?text=Hello%20Website%20of%20Pakistan%20—%20I%20need%20a%20professional%20website!" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
+<div class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></div>
+
+<header>
+  <div class="container nav-container">
+    <a href="#home" class="logo">
+      <img src="Website of .png" alt="Website of Pakistan Logo" />
+    </a>
+    <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
+    <ul class="nav-menu">
+      <li><a href="#home" class="nav-link active">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#services" class="nav-link">Services</a></li>
+      <li><a href="#projects" class="nav-link">Projects</a></li>
+      <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="container hero-grid">
+      <div data-aos="fade-right" data-aos-duration="1000">
+        <span class="hero-badge"><i class="fas fa-bolt"></i> Professional Digital Agency</span>
+        <h1 class="hero-title">Design. Develop. <br><span class="highlight">Grow.</span></h1>
+        <p style="color: var(--text-secondary); font-size: 1.2rem; margin: 1.5rem 0;">
+          We craft <strong style="color: var(--accent-green);">responsive websites</strong>, stunning graphics, and smart marketing strategies 
+          to elevate your business — all at <strong style="color: var(--accent-green);">reasonable prices</strong>.
+        </p>
+        <div class="hero-btns" style="display: flex; gap: 20px; flex-wrap: wrap;">
+          <a href="#contact" class="btn btn-primary"><i class="fas fa-rocket"></i> Start Your Project</a>
+          <a href="#services" class="btn btn-outline-light"><i class="fas fa-arrow-right"></i> Our Services</a>
+        </div>
+        <div class="hero-stats">
+          <div><h4>250+</h4><span style="color: var(--text-muted);">Projects</span></div>
+          <div><h4>98%</h4><span style="color: var(--text-muted);">Client Retention</span></div>
+          <div><h4>15</h4><span style="color: var(--text-muted);">Awards</span></div>
+        </div>
+      </div>
+      <div class="hero-image-area" data-aos="fade-left" data-aos-duration="1000">
+        <i class="fas fa-leaf" style="font-size: 5rem; color: var(--accent-green); opacity: 0.3; margin-bottom: 1rem;"></i>
+        <h3>Digital Excellence</h3>
+        <p>We build brands that matter — with precision, creativity, and purpose.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOGO BAR -->
+  <section style="padding: 40px 0; background: var(--bg-secondary);">
+    <div class="container">
+      <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 50px; opacity: 0.7;">
+        <i class="fab fa-microsoft" style="font-size: 2.5rem; color: #ccc;"></i>
+        <i class="fab fa-google" style="font-size: 2.5rem;"></i>
+        <i class="fab fa-stripe" style="font-size: 2.5rem;"></i>
+        <i class="fab fa-airbnb" style="font-size: 2.5rem;"></i>
+        <i class="fab fa-salesforce" style="font-size: 2.5rem;"></i>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up"><h2>Where Vision Meets Execution</h2><p>Website of Pakistan is a collective of strategists, designers, and engineers obsessed with creating meaningful impact.</p></div>
+      <div class="about-grid">
+        <div class="about-graphic-wrapper" data-aos="fade-right">
+          <div class="about-graphic">
+            <div class="grid-pattern"></div>
+            <div class="content">
+              <div class="big-icon"><i class="fas fa-cubes"></i></div>
+              <h3>Built for impact</h3>
+              <p>We blend design thinking with engineering excellence to craft digital experiences that resonate.</p>
+              <div class="floating-dots">
+                <span></span><span></span><span></span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div data-aos="fade-left">
+          <h3 style="font-size: 1.8rem;">Professional <span style="color: var(--accent-green);">Graphic Designers</span> & <span style="color: var(--accent-green);">Web Developers</span></h3>
+          <p style="color: var(--text-secondary); margin: 20px 0;">We help businesses grow with stunning visuals, responsive websites, and data-driven marketing strategies — all at prices that make sense.</p>
+          <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
+            <div><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> 120+ satisfied clients</div>
+            <div><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> 4.9 TrustScore</div>
+            <div><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> Affordable packages</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section id="services" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up"><h2>What We Offer</h2><p>Complete digital solutions to grow your business.</p></div>
+      <div class="services-grid">
+        <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
+          <div class="service-icon"><i class="fas fa-code"></i></div>
+          <h3>Web Development</h3>
+          <p>Fully responsive, SEO-optimized websites that convert visitors into customers.</p>
+          <span class="price-tag">from $299</span>
+        </div>
+        <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
+          <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+          <h3>Graphic Design</h3>
+          <p>Logo design, branding, social media creatives, and print materials that stand out.</p>
+          <span class="price-tag">from $99</span>
+        </div>
+        <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
+          <div class="service-icon"><i class="fas fa-chart-simple"></i></div>
+          <h3>Marketing Strategy</h3>
+          <p>SEO, social media management, and growth campaigns to scale your brand.</p>
+          <span class="price-tag">from $199</span>
+        </div>
+        <div class="service-card" data-aos="zoom-in" data-aos-delay="400">
+          <div class="service-icon"><i class="fas fa-mobile-screen-button"></i></div>
+          <h3>UI/UX Design</h3>
+          <p>Intuitive, user-friendly interfaces that enhance engagement and retention.</p>
+          <span class="price-tag">from $149</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS -->
+  <section class="stats-modern">
+    <div class="container stats-grid">
+      <div data-aos="flip-up"><div class="stat-number" data-target="312">0</div><div>Projects Delivered</div></div>
+      <div data-aos="flip-up" data-aos-delay="100"><div class="stat-number" data-target="189">0</div><div>Happy Clients</div></div>
+      <div data-aos="flip-up" data-aos-delay="200"><div class="stat-number" data-target="15">0</div><div>Global Awards</div></div>
+      <div data-aos="flip-up" data-aos-delay="300"><div class="stat-number" data-target="48">0</div><div>Expert Team</div></div>
+    </div>
+  </section>
+
+  <!-- PROJECTS with functional arrows -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up"><h2>Featured Projects</h2><p>Real-world solutions that deliver measurable impact.</p></div>
+      <div class="swiper projects-swiper" style="overflow:hidden; padding: 10px 0; position:relative;">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="project-card" style="margin:0 4px;">
+              <div style="padding: 30px 20px; text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fas fa-shopping-cart" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
+                <h3>E‑Commerce Suite</h3>
+                <p style="color: var(--text-secondary);">Headless commerce platform — 3x revenue growth.</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="project-card" style="margin:0 4px;">
+              <div style="padding: 30px 20px; text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fas fa-chart-pie" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
+                <h3>Fintech Dashboard</h3>
+                <p style="color: var(--text-secondary);">Interactive analytics hub with real-time data.</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="project-card" style="margin:0 4px;">
+              <div style="padding: 30px 20px; text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fas fa-gem" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
+                <h3>Luxury Rebrand</h3>
+                <p style="color: var(--text-secondary);">Complete visual identity for a premium hospitality group.</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="project-card" style="margin:0 4px;">
+              <div style="padding: 30px 20px; text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fas fa-robot" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
+                <h3>AI Chatbot</h3>
+                <p style="color: var(--text-secondary);">Intelligent customer support solution for SaaS.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination" style="position:relative; margin-top:20px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PORTFOLIO with functional arrows -->
+  <section id="portfolio" style="background: var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up"><h2>Selected Works</h2><p>Where creativity meets engineering precision.</p></div>
+      <div class="swiper portfolio-swiper" style="overflow:hidden; padding: 10px 0; position:relative;">
+        <div class="swiper-wrapper">
+          <div class="swiper-slide">
+            <div class="portfolio-item" style="margin:0 4px;">
+              <div style="padding: 30px 20px; text-align: center; min-height: 260px; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fas fa-chart-line" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
+                <h3>Fintech Dashboard</h3>
+                <p style="color: var(--text-secondary);">Interactive analytics platform</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="portfolio-item" style="margin:0 4px;">
+              <div style="padding: 30px 20px; text-align: center; min-height: 260px; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fas fa-crown" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
+                <h3>Luxury Rebrand</h3>
+                <p style="color: var(--text-secondary);">Visual identity system</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="portfolio-item" style="margin:0 4px;">
+              <div style="padding: 30px 20px; text-align: center; min-height: 260px; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fas fa-store" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
+                <h3>E‑commerce Suite</h3>
+                <p style="color: var(--text-secondary);">Headless commerce solution</p>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-slide">
+            <div class="portfolio-item" style="margin:0 4px;">
+              <div style="padding: 30px 20px; text-align: center; min-height: 260px; display: flex; flex-direction: column; justify-content: center;">
+                <i class="fas fa-palette" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
+                <h3>Creative Branding</h3>
+                <p style="color: var(--text-secondary);">Complete brand identity package</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-pagination" style="position:relative; margin-top:20px;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section>
+    <div class="container">
+      <div class="section-header" data-aos="fade-up"><h2>Voices of Excellence</h2><p>What our partners say about transformation.</p></div>
+      <div class="testimonial-wrapper" data-aos="fade-up">
+        <div class="swiper testimonial-swiper" style="overflow:hidden; padding: 10px 0 30px;">
+          <div class="swiper-wrapper">
+            <div class="swiper-slide">
+              <div class="testimonial-card-pro">
+                <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                <p>“Website of Pakistan delivered a next-gen platform that increased our user engagement by 210%. They are true partners in growth.”</p>
+                <div class="author">
+                  <div class="author-avatar">AC</div>
+                  <div class="author-info">
+                    <h4>Aria Chen</h4>
+                    <span>CTO, Nexify</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="testimonial-card-pro">
+                <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                <p>“The team's strategic vision and execution are unparalleled. They turned our brand into a market leader with their creative force.”</p>
+                <div class="author">
+                  <div class="author-avatar">MV</div>
+                  <div class="author-info">
+                    <h4>Marcus V.</h4>
+                    <span>Founder, Lumina</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="testimonial-card-pro">
+                <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                <p>“Incredible design & development — they transformed our vision into a stunning digital experience that truly resonates with our audience.”</p>
+                <div class="author">
+                  <div class="author-avatar">SR</div>
+                  <div class="author-info">
+                    <h4>Sofia R.</h4>
+                    <span>Creative Director</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="swiper-slide">
+              <div class="testimonial-card-pro">
+                <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
+                <p>“Working with Website of Pakistan was a game-changer. Their deep expertise in UI/UX and branding gave us a massive competitive edge.”</p>
+                <div class="author">
+                  <div class="author-avatar">JL</div>
+                  <div class="author-info">
+                    <h4>James L.</h4>
+                    <span>CEO, Vantage</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="swiper-pagination"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-glow" style="text-align: center;">
+    <div class="container" data-aos="zoom-in">
+      <h2 style="font-size: 3rem;">Ready to grow your business?</h2>
+      <p style="margin: 20px auto; max-width: 600px; color: var(--text-secondary);">Get a responsive website, professional design, and a marketing strategy — all at a reasonable price.</p>
+      <a href="#contact" class="btn btn-primary" style="margin-top: 20px;"><i class="fas fa-paper-plane"></i> Get a Free Quote</a>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up"><h2>Let's Connect</h2><p>Your vision deserves elite execution. Reach out and let's build something great.</p></div>
+      <div class="contact-grid">
+        <div data-aos="fade-right">
+          <div style="background: var(--bg-elevated); padding: 2rem; border-radius: var(--border-radius);">
+            <i class="fas fa-map-pin" style="font-size: 2rem; color: var(--accent-green);"></i>
+            <h3>Global HQ</h3>
+            <p>Digital District, Innovation Hub, PK 54000</p>
+            <hr style="border-color:var(--border-subtle); margin: 20px 0;" />
+            <i class="fas fa-envelope" style="color: var(--accent-green);"></i> <span>websiteofpakistan@gmail.com</span><br />
+            <i class="fab fa-whatsapp" style="color: var(--accent-green);"></i> <strong>+92 336 1871497</strong>
+            <div style="margin-top: 20px;">
+              <a href="https://wa.me/923361871497" target="_blank" class="btn btn-primary" style="width:100%; justify-content:center;">
+                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+              </a>
+            </div>
+          </div>
+        </div>
+        <div data-aos="fade-left">
+          <form id="contactForm">
+            <input type="text" class="form-input" placeholder="Full name" required />
+            <input type="email" class="form-input" placeholder="Email" required style="margin-top: 16px;" />
+            <input type="tel" class="form-input" placeholder="Phone number" style="margin-top: 16px;" />
+            <textarea class="form-input" rows="4" placeholder="Tell us about your project..." style="margin-top: 16px;"></textarea>
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 20px;">Send Inquiry <i class="fas fa-arrow-right"></i></button>
+            <div id="formStatus" style="margin-top: 16px;"></div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer-dark">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-about">
+        <div class="footer-logo">
+          <img src="Website of .png" alt="Website of Pakistan Logo" />
+        </div>
+        <p>Redefining the digital frontier with visionary craftsmanship. We blend creativity, technology, and strategy to build iconic brands.</p>
+        <div class="social-links">
+          <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
+        </div>
+      </div>
+      <div>
+        <h4 class="footer-title">Explore</h4>
+        <ul class="footer-links-list">
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About Us</a></li>
+          <li><a href="#services">Services</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#portfolio">Portfolio</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-title">Services</h4>
+        <ul class="footer-links-list">
+          <li><a href="#">Web Development</a></li>
+          <li><a href="#">Graphic Design</a></li>
+          <li><a href="#">Marketing Strategy</a></li>
+          <li><a href="#">UI/UX Design</a></li>
+          <li><a href="#">Branding</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4 class="footer-title">Contact</h4>
+        <div class="footer-contact-info">
+          <p><i class="fas fa-envelope"></i> websiteofpakistan@gmail.com</p>
+          <p><i class="fab fa-whatsapp"></i> +92 336 1871497</p>
+          <p><i class="fas fa-map-pin"></i> Digital District, PK</p>
+        </div>
+        <div style="margin-top: 20px;">
+          <h4 class="footer-title" style="margin-bottom:12px;">Stay Updated</h4>
+          <div class="newsletter-group" style="display:flex; gap:8px; flex-wrap:wrap;">
+            <input type="email" id="newsletterEmail" placeholder="Your email" style="flex:1; padding:10px 14px; background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: var(--border-radius); color: white; min-width:120px;" />
+            <button id="newsletterBtn" style="padding:10px 20px; background: var(--accent-gradient); border: none; border-radius: var(--border-radius); color: #0B0E17; font-weight:600; cursor:pointer;">Subscribe</button>
+          </div>
+          <div id="newsletterMsg" style="margin-top: 12px; font-size: 0.8rem;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Website of Pakistan — Professional Digital Agency. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script>
+  AOS.init({ duration: 800, once: true, offset: 100 });
+  window.addEventListener('load', () => { document.querySelector('.loader-wrapper').style.opacity = '0'; setTimeout(() => { document.querySelector('.loader-wrapper').style.display = 'none'; }, 500); });
+
+  const hamburger = document.querySelector('.hamburger'), navMenu = document.querySelector('.nav-menu');
+  hamburger?.addEventListener('click', () => { hamburger.classList.toggle('active'); navMenu.classList.toggle('active'); });
+  document.querySelectorAll('.nav-link').forEach(link => link.addEventListener('click', () => { navMenu.classList.remove('active'); hamburger.classList.remove('active'); }));
+
+  const counters = document.querySelectorAll('.stat-number');
+  const observerCounter = new IntersectionObserver((entries) => { entries.forEach(entry => { if(entry.isIntersecting){ const el = entry.target; const target = +el.getAttribute('data-target'); let count = 0; const update = () => { count += Math.ceil(target/60); if(count<target){ el.innerText = count; requestAnimationFrame(update); } else el.innerText = target; }; update(); observerCounter.unobserve(el); } }); }, { threshold: 0.5 });
+  counters.forEach(c => observerCounter.observe(c));
+
+  const header = document.querySelector('header');
+  const backTop = document.getElementById('backToTopBtn');
+  window.addEventListener('scroll', () => { 
+    window.scrollY > 50 ? header.classList.add('scrolled') : header.classList.remove('scrolled'); 
+    if(backTop) backTop.classList.toggle('active', window.scrollY > 500);
+  });
+  backTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  new Swiper('.projects-swiper', {
+    loop: true,
+    slidesPerView: 1,
+    spaceBetween: 20,
+    pagination: { el: '.projects-swiper .swiper-pagination', clickable: true },
+    navigation: { nextEl: '.projects-swiper .swiper-button-next', prevEl: '.projects-swiper .swiper-button-prev' },
+    breakpoints: { 640: { slidesPerView: 2, spaceBetween: 20 }, 1024: { slidesPerView: 3, spaceBetween: 30 } }
+  });
+
+  new Swiper('.portfolio-swiper', {
+    loop: true,
+    slidesPerView: 1,
+    spaceBetween: 20,
+    pagination: { el: '.portfolio-swiper .swiper-pagination', clickable: true },
+    navigation: { nextEl: '.portfolio-swiper .swiper-button-next', prevEl: '.portfolio-swiper .swiper-button-prev' },
+    breakpoints: { 640: { slidesPerView: 2, spaceBetween: 20 }, 1024: { slidesPerView: 3, spaceBetween: 30 } }
+  });
+
+  new Swiper('.testimonial-swiper', { 
+    loop: true, 
+    autoplay: { delay: 4500, disableOnInteraction: true }, 
+    pagination: { el: '.testimonial-swiper .swiper-pagination', clickable: true }, 
+    slidesPerView: 1, 
+    spaceBetween: 30, 
+    breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } 
+  });
+
+  const form = document.getElementById('contactForm');
+  const statusDiv = document.getElementById('formStatus');
+  form?.addEventListener('submit', (e) => { 
+    e.preventDefault(); 
+    statusDiv.innerHTML = '<span style="color:#2ECC71;">✨ Message received! Our team will respond within 12h.</span>'; 
+    form.reset(); 
+    setTimeout(() => statusDiv.innerHTML = '', 4000); 
+  });
+
+  const sections = document.querySelectorAll('section');
+  const navLinks = document.querySelectorAll('.nav-link');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(section => { const sectionTop = section.offsetTop - 200; if(scrollY >= sectionTop) current = section.getAttribute('id'); });
+    navLinks.forEach(link => { link.classList.remove('active'); if(link.getAttribute('href') === `#${current}`) link.classList.add('active'); });
+  });
+
+  document.getElementById('newsletterBtn')?.addEventListener('click', () => {
+    const email = document.getElementById('newsletterEmail').value;
+    const msgDiv = document.getElementById('newsletterMsg');
+    if(email && email.includes('@')) {
+      msgDiv.innerHTML = '<span style="color:#2ECC71;">✅ Subscribed successfully!</span>';
+      document.getElementById('newsletterEmail').value = '';
+      setTimeout(() => msgDiv.innerHTML = '', 3000);
+    } else { msgDiv.innerHTML = '<span style="color:#f87171;">Please enter valid email</span>'; setTimeout(() => msgDiv.innerHTML = '', 2000); }
+  });
+</script>
+</body>
+</html>
