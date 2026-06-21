@@ -4,11 +4,14 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Website of Pakistan · Pro Agency</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <!-- Google Fonts -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
+  <!-- Swiper & AOS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
   <style>
+    /* --- RESET & BASE --- */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
       font-family: 'Inter', sans-serif;
@@ -17,6 +20,7 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
+    html { scroll-behavior: smooth; }
     :root {
       --bg-primary: #0B0E17;
       --bg-secondary: #0F121C;
@@ -50,6 +54,8 @@
     }
     .section-header { margin-bottom: 60px; }
     .section-header p { color: var(--text-secondary); font-size: 1.2rem; max-width: 600px; margin-top: 12px; }
+
+    /* LOADER */
     .loader-wrapper {
       position: fixed; top:0; left:0; width:100%; height:100%;
       background: var(--bg-primary); display:flex; justify-content:center; align-items:center;
@@ -57,6 +63,8 @@
     }
     .loader { width:60px; height:60px; border:3px solid var(--border-subtle); border-top:3px solid var(--accent-green); border-radius:50%; animation: spin 1s cubic-bezier(0.68,-0.55,0.265,1.55) infinite; box-shadow:0 0 15px rgba(46,204,113,0.3); }
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* HEADER */
     header {
       position: fixed; top:0; width:100%; z-index:1000;
       background: rgba(11,14,23,0.85); backdrop-filter: blur(18px);
@@ -65,14 +73,8 @@
     }
     header.scrolled { background: rgba(11, 14, 23, 0.082); }
     .nav-container { display:flex; justify-content:space-between; align-items:center; height:70px; }
-    .logo {
-      font-size:1.8rem; font-weight:800; letter-spacing:-0.5px; text-decoration:none; display:flex; align-items:center; gap:8px;
-    }
-    .logo img {
-      height: 70px;
-      width: auto;
-      display: block;
-    }
+    .logo { font-size:1.8rem; font-weight:800; letter-spacing:-0.5px; text-decoration:none; display:flex; align-items:center; gap:8px; }
+    .logo img { height: 70px; width: auto; display: block; }
     .nav-menu { display:flex; gap:2rem; list-style:none; align-items:center; }
     .nav-link { font-weight:500; color:var(--text-secondary); transition:var(--transition); font-size:0.95rem; text-decoration:none; position:relative; }
     .nav-link::after { content:''; position:absolute; bottom:-6px; left:0; width:0%; height:2px; background:var(--accent-gradient); transition:0.3s; }
@@ -81,7 +83,7 @@
     .hamburger { display:none; flex-direction:column; gap:6px; cursor:pointer; z-index:1001; }
     .bar { width:28px; height:2px; background:white; transition:0.3s; }
 
-    /* Hero */
+    /* HERO */
     .hero { min-height:100vh; display:flex; align-items:center; position:relative; background:radial-gradient(circle at 80% 20%, rgba(46,204,113,0.08) 0%, rgba(11,14,23,0) 70%); padding-top:100px; }
     .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
     .hero-title { font-size:4rem; font-weight:800; line-height:1.1; background:linear-gradient(to right, #FFF, #A9DFBF); -webkit-background-clip:text; background-clip:text; color:transparent; animation:fadeInUp 0.8s ease; }
@@ -95,25 +97,50 @@
     .btn-outline-light:hover { background:rgba(46,204,113,0.1); border-color:var(--accent-green); transform:translateY(-4px); }
     .hero-stats { display:flex; gap:2rem; margin-top:2rem; flex-wrap:wrap; }
     .hero-stats div h4 { font-size:1.8rem; color:var(--accent-green); }
-    .hero-image-area { background:linear-gradient(135deg, #1A2A1A, #0F121C); border-radius:var(--border-radius); height:500px; box-shadow:var(--shadow-xl); border:1px solid rgba(46,204,113,0.15); position:relative; animation:fadeInRight 0.9s ease; display:flex; align-items:center; justify-content:center; flex-direction:column; text-align:center; padding:2rem; }
-    .hero-image-area h3 { font-size:2.5rem; color:var(--accent-green); margin-bottom:1rem; }
+    .hero-image-area {
+      border-radius: var(--border-radius);
+      height: 500px;
+      position: relative;
+      animation: fadeInRight 0.9s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 2rem;
+      overflow: hidden;
+    }
+    .hero-image-area img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+      opacity: 0.85;
+      padding: 1rem;
+    }
+    .hero-image-area .content {
+      position: relative;
+      z-index: 2;
+    }
+    .hero-image-area h3 { font-size: 2.5rem; color: var(--accent-green); margin-bottom: 1rem; }
     @keyframes fadeInRight { from { opacity:0; transform:translateX(40px); } to { opacity:1; transform:translateX(0); } }
 
-    /* cards */
-    .service-card, .project-card, .portfolio-item { background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-subtle); transition:var(--transition); overflow:hidden; }
+    /* CARDS */
+    .service-card, .project-card, .team-card, .blog-card { background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-subtle); transition:var(--transition); overflow:hidden; }
     .service-card { padding:2rem; }
-    .service-card:hover, .project-card:hover { transform:translateY(-8px); border-color:var(--accent-green); box-shadow:var(--shadow-md); }
-    .services-grid, .portfolio-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; }
-    .service-icon { width:64px; height:64px; background:rgba(46,204,113,0.12); border-radius:var(--border-radius); display:flex; align-items:center; justify-content:center; font-size:1.8rem; color:var(--accent-green); margin-bottom:24px; transition:0.3s; }
-    .service-card:hover .service-icon { transform:scale(1.1); background:var(--accent-green); color:#0B0E17; }
+    .service-card:hover, .project-card:hover, .team-card:hover, .blog-card:hover { transform:translateY(-8px); border-color:var(--accent-green); box-shadow:var(--shadow-md); }
+    .services-grid, .team-grid, .blog-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(280px,1fr)); gap:30px; }
+    .service-icon { width:64px; height:64px; background:rgba(46,204,113,0.12); border-radius:var(--border-radius); display:flex; align-items:center; justify-content:center; color:var(--accent-green); margin-bottom:24px; transition:0.3s; }
+    .service-icon svg { width: 28px; height: 28px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+    .service-card:hover .service-icon { transform:scale(1.1) rotate(4deg); background:var(--accent-gradient); color:#0B0E17; }
     .stats-modern { background:linear-gradient(135deg, #0B0E17 0%, #0F121C 100%); border-top:1px solid var(--border-subtle); border-bottom:1px solid var(--border-subtle); }
     .stats-grid { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; text-align:center; }
     .stat-number { font-size:3rem; font-weight:800; color:var(--accent-green); }
 
-    /* testimonial */
-    .testimonial-wrapper {
-      border-radius: var(--border-radius);
-    }
+    /* TESTIMONIAL */
+    .testimonial-wrapper { border-radius: var(--border-radius); }
     .testimonial-card-pro {
       background: var(--bg-card);
       border-radius: var(--border-radius);
@@ -125,79 +152,38 @@
       flex-direction: column;
       box-shadow: var(--shadow-sm);
     }
-    .testimonial-card-pro:hover {
-      border-color: var(--accent-green);
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-    }
-    .testimonial-card-pro .quote-icon {
-      font-size: 2.2rem;
-      color: var(--accent-green);
-      opacity: 0.4;
-      margin-bottom: 1rem;
-    }
-    .testimonial-card-pro p {
-      color: var(--text-secondary);
-      font-size: 1.05rem;
-      line-height: 1.7;
-      flex: 1;
-      margin-bottom: 1.5rem;
-      font-style: italic;
-    }
-    .testimonial-card-pro .author {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      border-top: 1px solid var(--border-subtle);
-      padding-top: 1.2rem;
-    }
-    .testimonial-card-pro .author-avatar {
-      width: 48px;
-      height: 48px;
-      border-radius: 50%;
-      background: var(--accent-gradient);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      color: #0B0E17;
-      font-size: 1.2rem;
-      flex-shrink: 0;
-    }
-    .testimonial-card-pro .author-info h4 {
-      font-size: 1rem;
-      color: white;
-      margin-bottom: 2px;
-    }
-    .testimonial-card-pro .author-info span {
-      font-size: 0.85rem;
-      color: var(--text-muted);
-    }
-    .testimonial-swiper .swiper-pagination-bullet {
-      background: var(--text-muted);
-    }
-    .testimonial-swiper .swiper-pagination-bullet-active {
-      background: var(--accent-green);
-    }
+    .testimonial-card-pro:hover { border-color: var(--accent-green); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .testimonial-card-pro .quote-icon { color: var(--accent-green); opacity: 0.4; margin-bottom: 1rem; }
+    .testimonial-card-pro .quote-icon svg { width: 32px; height: 32px; stroke: currentColor; fill: none; stroke-width: 1.8; }
+    .testimonial-card-pro p { color: var(--text-secondary); font-size: 1.05rem; line-height: 1.7; flex: 1; margin-bottom: 1.5rem; font-style: italic; }
+    .testimonial-card-pro .author { display: flex; align-items: center; gap: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 1.2rem; }
+    .testimonial-card-pro .author-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--accent-gradient); display: flex; align-items: center; justify-content: center; font-weight: 700; color: #0B0E17; font-size: 1.2rem; flex-shrink: 0; }
+    .testimonial-card-pro .author-info h4 { font-size: 1rem; color: white; margin-bottom: 2px; }
+    .testimonial-card-pro .author-info span { font-size: 0.85rem; color: var(--text-muted); }
+    .testimonial-swiper .swiper-pagination-bullet { background: var(--text-muted); }
+    .testimonial-swiper .swiper-pagination-bullet-active { background: var(--accent-green); }
 
-    .whatsapp-float { position:fixed; bottom:28px; right:28px; background:#25D366; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:28px; color:white; box-shadow:var(--shadow-md); z-index:99; transition:0.2s; text-decoration:none; }
+    /* FLOATING BUTTONS */
+    .whatsapp-float { position:fixed; bottom:28px; right:28px; background:#25D366; width:56px; height:56px; border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:var(--shadow-md); z-index:99; transition:0.2s; text-decoration:none; color:white; }
+    .whatsapp-float svg { width: 28px; height: 28px; fill: currentColor; }
     .whatsapp-float:hover { transform:scale(1.1); background:#128C7E; }
     .back-to-top { position:fixed; bottom:100px; right:28px; background:var(--accent-green); width:48px; height:48px; border-radius:50%; display:flex; align-items:center; justify-content:center; cursor:pointer; opacity:0; visibility:hidden; transition:0.3s; z-index:99; box-shadow:var(--shadow-sm); border:none; color:#0B0E17; }
+    .back-to-top svg { width: 24px; height: 24px; stroke: currentColor; fill: none; stroke-width: 2; }
     .back-to-top.active { opacity:1; visibility:visible; }
     .back-to-top:hover { background:var(--accent-glow); transform:translateY(-5px); }
 
+    /* CTA */
     .cta-glow { background:radial-gradient(circle at 30% 10%, rgba(46,204,113,0.12), transparent); }
+
+    /* FOOTER */
     .footer-dark { background:#070A12; border-top:1px solid var(--border-subtle); margin-top:0; }
     .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1.5fr; gap:40px; padding:60px 0 40px; }
     .footer-logo { font-size:1.8rem; font-weight:800; margin-bottom:20px; display:inline-block; }
-    .footer-logo img {
-      height: 40px;
-      width: auto;
-      display: block;
-    }
+    .footer-logo img { height: 40px; width: auto; display: block; }
     .footer-about p { color:var(--text-muted); margin-bottom:24px; line-height:1.7; }
     .social-links { display:flex; gap:16px; margin-top:20px; flex-wrap:wrap; }
     .social-icon { width:40px; height:40px; background:rgba(255,255,255,0.05); border-radius:var(--border-radius); display:flex; align-items:center; justify-content:center; color:var(--text-secondary); transition:var(--transition); text-decoration:none; }
+    .social-icon svg { width: 20px; height: 20px; fill: currentColor; }
     .social-icon:hover { background:var(--accent-green); color:#0B0E17; transform:translateY(-3px); }
     .footer-title { font-size:1.2rem; font-weight:600; margin-bottom:24px; color:white; position:relative; }
     .footer-links-list { list-style:none; }
@@ -206,13 +192,15 @@
     .footer-links-list a:hover { color:var(--accent-green); padding-left:5px; }
     .footer-bottom { border-top:1px solid var(--border-subtle); padding:30px 0; text-align:center; color:var(--text-muted); font-size:0.9rem; }
     .footer-contact-info { color:var(--text-secondary); font-size:0.95rem; }
-    .footer-contact-info i { color:var(--accent-green); width:24px; }
+    .footer-contact-info svg { width: 18px; height: 18px; stroke: var(--accent-green); fill: none; stroke-width: 1.8; vertical-align: middle; margin-right: 8px; }
+
+    /* FORMS */
     .form-input { width:100%; padding:14px 18px; background:var(--bg-card); border:1px solid var(--border-subtle); border-radius:var(--border-radius); color:white; transition:0.2s; }
     .form-input:focus { border-color:var(--accent-green); outline:none; box-shadow:0 0 0 3px rgba(46,204,113,0.2); }
     .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:60px; }
     .price-tag { display:inline-block; background:rgba(46,204,113,0.15); padding:4px 14px; border-radius:var(--border-radius); font-size:0.75rem; color:var(--accent-green); border:1px solid rgba(46,204,113,0.2); }
 
-    /* Swiper arrows - always visible and functional */
+    /* SWIPER ARROWS */
     .swiper-button-next, .swiper-button-prev {
       color: var(--accent-green);
       background: rgba(11,14,23,0.8);
@@ -223,19 +211,12 @@
       border: 1px solid var(--border-subtle);
       transition: var(--transition);
     }
-    .swiper-button-next::after, .swiper-button-prev::after {
-      font-size: 18px;
-      font-weight: bold;
-    }
-    .swiper-button-next:hover, .swiper-button-prev:hover {
-      background: var(--accent-green);
-      color: #0B0E17;
-      border-color: var(--accent-green);
-    }
+    .swiper-button-next::after, .swiper-button-prev::after { font-size: 18px; font-weight: bold; }
+    .swiper-button-next:hover, .swiper-button-prev:hover { background: var(--accent-green); color: #0B0E17; border-color: var(--accent-green); }
     .swiper-pagination-bullet { background: var(--text-muted); }
     .swiper-pagination-bullet-active { background: var(--accent-green); }
 
-    /* about graphic */
+    /* ABOUT GRAPHIC */
     .about-graphic {
       background: linear-gradient(145deg, #131724, #0F121C);
       border-radius: var(--border-radius);
@@ -259,49 +240,117 @@
       background-size: 40px 40px;
       z-index: 1;
     }
-    .about-graphic .content {
-      position: relative;
-      z-index: 2;
-      text-align: center;
-    }
-    .about-graphic .big-icon {
-      font-size: 4.5rem;
-      color: var(--accent-green);
-      opacity: 0.25;
-      margin-bottom: 1.5rem;
-    }
-    .about-graphic h3 {
-      font-size: 1.8rem;
-      color: white;
-      margin-bottom: 0.5rem;
-    }
-    .about-graphic p {
-      color: var(--text-secondary);
-      max-width: 400px;
-    }
-    .about-graphic .floating-dots {
-      display: flex;
-      gap: 12px;
-      margin-top: 1.5rem;
-    }
-    .about-graphic .floating-dots span {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      background: var(--accent-green);
-      opacity: 0.3;
-      animation: pulse-dot 2s infinite alternate;
-    }
+    .about-graphic .content { position: relative; z-index: 2; text-align: center; }
+    .about-graphic .big-icon { color: var(--accent-green); opacity: 0.25; margin-bottom: 1.5rem; }
+    .about-graphic .big-icon svg { width: 60px; height: 60px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+    .about-graphic h3 { font-size: 1.8rem; color: white; margin-bottom: 0.5rem; }
+    .about-graphic p { color: var(--text-secondary); max-width: 400px; }
+    .about-graphic .floating-dots { display: flex; gap: 12px; margin-top: 1.5rem; }
+    .about-graphic .floating-dots span { width: 12px; height: 12px; border-radius: 50%; background: var(--accent-green); opacity: 0.3; animation: pulse-dot 2s infinite alternate; }
     .about-graphic .floating-dots span:nth-child(2) { animation-delay: 0.4s; opacity: 0.5; }
     .about-graphic .floating-dots span:nth-child(3) { animation-delay: 0.8s; opacity: 0.7; }
     @keyframes pulse-dot { 0% { transform: scale(0.8); opacity: 0.2; } 100% { transform: scale(1.2); opacity: 0.8; } }
 
-    /* --- responsive fixes --- */
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 60px;
+    /* TEAM & BLOG */
+    .team-card, .blog-card { padding: 1.8rem; text-align: center; }
+    .team-card .avatar { width: 80px; height: 80px; border-radius: 50%; background: var(--accent-gradient); margin: 0 auto 1rem; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: 700; color: #0B0E17; }
+    .blog-card svg { width: 40px; height: 40px; stroke: var(--accent-green); fill: none; stroke-width: 1.5; margin-bottom: 0.5rem; }
+    .blog-card .blog-meta { color: var(--text-muted); font-size: 0.8rem; margin: 0.5rem 0 0.8rem; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; }
+
+    /* ANIMATIONS */
+    .float-animation { animation: floatY 6s ease-in-out infinite; }
+    @keyframes floatY { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+    .glow-pulse { animation: glowPulse 3s ease-in-out infinite; }
+    @keyframes glowPulse { 0%,100% { box-shadow: 0 0 10px rgba(46,204,113,0.1); } 50% { box-shadow: 0 0 30px rgba(46,204,113,0.3); } }
+
+    /* PROJECT SLIDER CARDS */
+    .project-card {
+      padding: 2rem 1.5rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 260px;
+      margin: 0 6px;
     }
+    .project-card .project-icon { color: var(--accent-green); margin-bottom: 0.8rem; }
+    .project-card .project-icon svg { width: 44px; height: 44px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+    .project-card h3 { font-size: 1.4rem; margin-bottom: 0.3rem; color: #fff; }
+    .project-card p { color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 1.2rem; }
+    .project-card .btn-explore {
+      position: relative;
+      overflow: hidden;
+      background: transparent;
+      color: #2ECC71;
+      padding: 8px 22px;
+      border: 2px solid #2ECC71;
+      border-radius: var(--border-radius);
+      font-weight: 600;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.4s ease;
+      z-index: 1;
+    }
+    .project-card .btn-explore::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 0;
+      background: var(--accent-gradient);
+      transition: width 0.4s ease;
+      z-index: -1;
+    }
+    .project-card .btn-explore:hover::before { width: 100%; }
+    .project-card .btn-explore span,
+    .project-card .btn-explore svg { position: relative; z-index: 2; }
+    .project-card .btn-explore svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 2; transition: transform 0.4s ease; }
+    .project-card .btn-explore:hover { color: #0B0E17; transform: translateY(-3px); box-shadow: 0 8px 25px rgba(46,204,113,0.4); }
+    .project-card .btn-explore:hover svg { transform: translateX(4px); }
+
+    /* FAQ Styles */
+    .faq-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: var(--border-radius);
+      margin-bottom: 16px;
+      transition: var(--transition);
+    }
+    .faq-item:hover { border-color: var(--accent-green); }
+    .faq-item .faq-question {
+      padding: 1.2rem 1.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .faq-item .faq-question i {
+      transition: transform 0.3s ease;
+      color: var(--accent-green);
+    }
+    .faq-item.active .faq-question i {
+      transform: rotate(180deg);
+    }
+    .faq-item .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+      padding: 0 1.8rem;
+      color: var(--text-secondary);
+    }
+    .faq-item.active .faq-answer {
+      max-height: 300px;
+      padding: 0 1.8rem 1.5rem;
+    }
+
+    /* RESPONSIVE */
     @media (max-width:992px) {
       .hero-grid { grid-template-columns:1fr; gap:2rem; text-align:center; }
       .hero-stats { justify-content:center; }
@@ -323,7 +372,7 @@
       h2 { font-size:2rem; }
       .hero-title { font-size:2.5rem; }
       .section-header { margin-bottom:40px; }
-      .services-grid, .portfolio-grid { gap:20px; }
+      .services-grid, .team-grid, .blog-grid { gap:20px; }
       .service-card { padding:1.5rem; }
       .footer-grid { grid-template-columns:1fr; text-align:left; gap:40px; }
       .footer-about p { max-width:100%; }
@@ -346,13 +395,8 @@
       .btn { padding:12px 24px; font-size:0.9rem; }
       .hero-stats div h4 { font-size:1.4rem; }
       .stat-number { font-size:2.2rem; }
-      .about-grid {
-        grid-template-columns: 1fr;
-        gap: 0;
-      }
-      .about-grid .about-graphic-wrapper {
-        display: none;
-      }
+      .about-grid { grid-template-columns: 1fr; gap: 0; }
+      .about-grid .about-graphic-wrapper { display: none; }
       .footer-grid { text-align: left; }
       .footer-links-list { text-align: left; }
       .social-links { justify-content: flex-start; }
@@ -364,8 +408,15 @@
 <body>
 <div class="loader-wrapper"><div class="loader"></div></div>
 
-<a href="https://wa.me/923361871497?text=Hello%20Website%20of%20Pakistan%20—%20I%20need%20a%20professional%20website!" class="whatsapp-float" target="_blank"><i class="fab fa-whatsapp"></i></a>
-<div class="back-to-top" id="backToTopBtn"><i class="fas fa-arrow-up"></i></div>
+<!-- WhatsApp Float -->
+<a href="https://wa.me/923361871497?text=Hello%20Website%20of%20Pakistan%20—%20I%20need%20a%20professional%20website!" class="whatsapp-float" target="_blank">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72.3 332l-4.3-6.9c-17.1-28.2-26.1-60.8-26.1-93.9 0-103.8 84.4-188.2 188.2-188.2 50.2 0 97.4 19.6 132.9 55.1 35.5 35.5 55.1 82.7 55.1 132.9 0 103.9-84.4 188.3-188.3 188.3zm103.3-141.3c-5.7-2.8-33.6-16.6-38.8-18.5-5.2-1.9-9-2.8-12.8 2.8-3.8 5.6-14.7 18.5-18 22.3-3.3 3.8-6.6 4.3-12.3 1.5-5.7-2.8-24.1-8.9-45.9-28.3-17-15.2-28.5-34-31.8-39.8-3.3-5.8-.3-9 2.5-11.9 2.5-2.5 5.6-6.6 8.4-9.9 2.8-3.3 3.8-5.6 5.7-9.4 1.9-3.8 1-7.1-.5-9.9-1.5-2.8-12.8-30.9-17.5-42.3-4.6-11.2-9.3-9.7-12.8-9.9-3.3-.2-7.1-.2-10.9-.2-3.8 0-9.9 1.4-15.1 7.1-5.2 5.7-19.8 19.4-19.8 47.2 0 27.8 20.2 54.6 23 58.4 2.8 3.8 39.8 60.8 96.4 85.2 13.5 5.8 24.1 9.3 32.3 11.9 13.6 4.3 25.9 3.7 35.7 2.2 10.9-1.7 33.6-13.7 38.3-26.9 4.7-13.2 4.7-24.5 3.3-26.9-1.4-2.4-5.1-3.8-10.8-6.6z"/></svg>
+</a>
+
+<!-- Back to Top -->
+<div class="back-to-top" id="backToTopBtn">
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" /></svg>
+</div>
 
 <header>
   <div class="container nav-container">
@@ -377,8 +428,9 @@
       <li><a href="#home" class="nav-link active">Home</a></li>
       <li><a href="#about" class="nav-link">About</a></li>
       <li><a href="#services" class="nav-link">Services</a></li>
+      <li><a href="#team" class="nav-link">Team</a></li>
       <li><a href="#projects" class="nav-link">Projects</a></li>
-      <li><a href="#portfolio" class="nav-link">Portfolio</a></li>
+      <li><a href="#blog" class="nav-link">Blog</a></li>
       <li><a href="#contact" class="nav-link">Contact</a></li>
     </ul>
   </div>
@@ -389,15 +441,24 @@
   <section class="hero" id="home">
     <div class="container hero-grid">
       <div data-aos="fade-right" data-aos-duration="1000">
-        <span class="hero-badge"><i class="fas fa-bolt"></i> Professional Digital Agency</span>
+        <span class="hero-badge">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="display:inline;vertical-align:middle;margin-right:4px;"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          Professional Digital Agency
+        </span>
         <h1 class="hero-title">Design. Develop. <br><span class="highlight">Grow.</span></h1>
         <p style="color: var(--text-secondary); font-size: 1.2rem; margin: 1.5rem 0;">
           We craft <strong style="color: var(--accent-green);">responsive websites</strong>, stunning graphics, and smart marketing strategies 
           to elevate your business — all at <strong style="color: var(--accent-green);">reasonable prices</strong>.
         </p>
         <div class="hero-btns" style="display: flex; gap: 20px; flex-wrap: wrap;">
-          <a href="#contact" class="btn btn-primary"><i class="fas fa-rocket"></i> Start Your Project</a>
-          <a href="#services" class="btn btn-outline-light"><i class="fas fa-arrow-right"></i> Our Services</a>
+          <a href="#contact" class="btn btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 3-2 4.5 0 1.5 1.5 2 3 1.5 1.5-.5 3.5-2 4.5-3"/><path d="M12 2a10 10 0 0 0-7.07 17.07"/><path d="M12 2a10 10 0 0 1 7.07 17.07"/><path d="M8.5 12.5c1.5-1.5 4-3.5 7-1.5 1.5 1 2 2.5 2 4.5"/><path d="M15.5 8.5c1.5-1.5 4-3.5 7-1.5"/></svg>
+            Start Your Project
+          </a>
+          <a href="#services" class="btn btn-outline-light">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+            Our Services
+          </a>
         </div>
         <div class="hero-stats">
           <div><h4>250+</h4><span style="color: var(--text-muted);">Projects</span></div>
@@ -405,10 +466,9 @@
           <div><h4>15</h4><span style="color: var(--text-muted);">Awards</span></div>
         </div>
       </div>
-      <div class="hero-image-area" data-aos="fade-left" data-aos-duration="1000">
-        <i class="fas fa-leaf" style="font-size: 5rem; color: var(--accent-green); opacity: 0.3; margin-bottom: 1rem;"></i>
-        <h3>Digital Excellence</h3>
-        <p>We build brands that matter — with precision, creativity, and purpose.</p>
+      <div class="hero-image-area float-animation" data-aos="fade-left" data-aos-duration="1000">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/027/309/218/small_2x/online-education-with-ai-generated-free-png.png" alt="Web Development & AI Services" />
+        <div class="content"></div>
       </div>
     </div>
   </section>
@@ -418,10 +478,10 @@
     <div class="container">
       <div style="display: flex; justify-content: center; flex-wrap: wrap; gap: 50px; opacity: 0.7;">
         <i class="fab fa-microsoft" style="font-size: 2.5rem; color: #ccc;"></i>
-        <i class="fab fa-google" style="font-size: 2.5rem;"></i>
-        <i class="fab fa-stripe" style="font-size: 2.5rem;"></i>
-        <i class="fab fa-airbnb" style="font-size: 2.5rem;"></i>
-        <i class="fab fa-salesforce" style="font-size: 2.5rem;"></i>
+        <i class="fab fa-google" style="font-size: 2.5rem; color: #ccc;"></i>
+        <i class="fab fa-stripe" style="font-size: 2.5rem; color: #ccc;"></i>
+        <i class="fab fa-airbnb" style="font-size: 2.5rem; color: #ccc;"></i>
+        <i class="fab fa-salesforce" style="font-size: 2.5rem; color: #ccc;"></i>
       </div>
     </div>
   </section>
@@ -432,10 +492,12 @@
       <div class="section-header" data-aos="fade-up"><h2>Where Vision Meets Execution</h2><p>Website of Pakistan is a collective of strategists, designers, and engineers obsessed with creating meaningful impact.</p></div>
       <div class="about-grid">
         <div class="about-graphic-wrapper" data-aos="fade-right">
-          <div class="about-graphic">
+          <div class="about-graphic glow-pulse">
             <div class="grid-pattern"></div>
             <div class="content">
-              <div class="big-icon"><i class="fas fa-cubes"></i></div>
+              <div class="big-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"/></svg>
+              </div>
               <h3>Built for impact</h3>
               <p>We blend design thinking with engineering excellence to craft digital experiences that resonate.</p>
               <div class="floating-dots">
@@ -448,9 +510,18 @@
           <h3 style="font-size: 1.8rem;">Professional <span style="color: var(--accent-green);">Graphic Designers</span> & <span style="color: var(--accent-green);">Web Developers</span></h3>
           <p style="color: var(--text-secondary); margin: 20px 0;">We help businesses grow with stunning visuals, responsive websites, and data-driven marketing strategies — all at prices that make sense.</p>
           <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 20px;">
-            <div><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> 120+ satisfied clients</div>
-            <div><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> 4.9 TrustScore</div>
-            <div><i class="fas fa-check-circle" style="color: var(--accent-green);"></i> Affordable packages</div>
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+              120+ satisfied clients
+            </div>
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+              4.9 TrustScore
+            </div>
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:6px;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><path d="M22 4L12 14.01l-3-3"/></svg>
+              Affordable packages
+            </div>
           </div>
         </div>
       </div>
@@ -463,28 +534,69 @@
       <div class="section-header" data-aos="fade-up"><h2>What We Offer</h2><p>Complete digital solutions to grow your business.</p></div>
       <div class="services-grid">
         <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
-          <div class="service-icon"><i class="fas fa-code"></i></div>
+          <div class="service-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
+          </div>
           <h3>Web Development</h3>
           <p>Fully responsive, SEO-optimized websites that convert visitors into customers.</p>
           <span class="price-tag">from $299</span>
         </div>
         <div class="service-card" data-aos="zoom-in" data-aos-delay="200">
-          <div class="service-icon"><i class="fas fa-paint-brush"></i></div>
+          <div class="service-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.53 16.122a3 3 0 0 0-5.78 1.128 2.25 2.25 0 0 0 2.4 2.245 4.5 4.5 0 0 0 8.4-2.245c0-.399-.078-.78-.226-1.128m0 0a3.001 3.001 0 0 0 5.78-1.128 2.25 2.25 0 0 0-2.4-2.245 4.5 4.5 0 0 0-8.4 2.245c0 .399.078.78.226 1.128m0 0l-1.72 1.72m0 0l1.72 1.72m-1.72-1.72h7.2"/></svg>
+          </div>
           <h3>Graphic Design</h3>
           <p>Logo design, branding, social media creatives, and print materials that stand out.</p>
           <span class="price-tag">from $99</span>
         </div>
         <div class="service-card" data-aos="zoom-in" data-aos-delay="300">
-          <div class="service-icon"><i class="fas fa-chart-simple"></i></div>
+          <div class="service-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.035 12.035 0 0 1 16.5 7.5"/></svg>
+          </div>
           <h3>Marketing Strategy</h3>
           <p>SEO, social media management, and growth campaigns to scale your brand.</p>
           <span class="price-tag">from $199</span>
         </div>
         <div class="service-card" data-aos="zoom-in" data-aos-delay="400">
-          <div class="service-icon"><i class="fas fa-mobile-screen-button"></i></div>
+          <div class="service-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 0h-3m3 0h3"/></svg>
+          </div>
           <h3>UI/UX Design</h3>
           <p>Intuitive, user-friendly interfaces that enhance engagement and retention.</p>
           <span class="price-tag">from $149</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section id="team">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up"><h2>Meet the Minds</h2><p>Our creative force — designers, engineers, and strategists.</p></div>
+      <div class="team-grid">
+        <div class="team-card" data-aos="flip-left" data-aos-delay="100">
+          <div class="avatar">AK</div>
+          <h3>Ahmad Khan</h3>
+          <p style="color: var(--accent-green);">Lead Developer</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Full-stack architect with 10+ years of experience.</p>
+        </div>
+        <div class="team-card" data-aos="flip-left" data-aos-delay="200">
+          <div class="avatar">SR</div>
+          <h3>Sara Riaz</h3>
+          <p style="color: var(--accent-green);">Creative Director</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Visual storyteller & brand strategist.</p>
+        </div>
+        <div class="team-card" data-aos="flip-left" data-aos-delay="300">
+          <div class="avatar">FT</div>
+          <h3>Fatima Tariq</h3>
+          <p style="color: var(--accent-green);">UX/UI Designer</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Human-centered design & interaction expert.</p>
+        </div>
+        <div class="team-card" data-aos="flip-left" data-aos-delay="400">
+          <div class="avatar">MN</div>
+          <h3>Muneeb Naeem</h3>
+          <p style="color: var(--accent-green);">Marketing Lead</p>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">Growth hacker & data-driven strategist.</p>
         </div>
       </div>
     </div>
@@ -500,48 +612,78 @@
     </div>
   </section>
 
-  <!-- PROJECTS with functional arrows -->
+  <!-- PROJECTS - SLIDING CARDS -->
   <section id="projects">
     <div class="container">
-      <div class="section-header" data-aos="fade-up"><h2>Featured Projects</h2><p>Real-world solutions that deliver measurable impact.</p></div>
-      <div class="swiper projects-swiper" style="overflow:hidden; padding: 10px 0; position:relative;">
+      <div class="section-header" data-aos="fade-up"><h2>Featured Projects</h2><p>Explore our live demos — real-world solutions built with precision.</p></div>
+      <div class="swiper projects-swiper" style="overflow:hidden; padding: 10px 0 40px; position:relative;">
         <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="project-card" style="margin:0 4px;">
-              <div style="padding: 30px 20px; text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
-                <i class="fas fa-shopping-cart" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
-                <h3>E‑Commerce Suite</h3>
-                <p style="color: var(--text-secondary);">Headless commerce platform — 3x revenue growth.</p>
-              </div>
+          <div class="swiper-slide"><div class="project-card">
+            <div class="project-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993l1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007z"/></svg></div>
+            <h3>Haseeb Collection</h3>
+            <p>Premium e‑commerce</p>
+            <a href="https://haseeb-zafar-804.github.io/haseebcollection" target="_blank" class="btn-explore">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+              Explore
+            </a>
+          </div></div>
+          <div class="swiper-slide"><div class="project-card">
+            <div class="project-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M7.5 21L3 16.5m0 0L7.5 12M3 16.5h13.5m0-13.5L21 7.5m0 0L16.5 12M21 7.5H7.5"/></svg></div>
+            <h3>Swapify</h3>
+            <p>Peer‑to‑peer swap</p>
+            <a href="https://haseeb-zafar-804.github.io/Swapify" target="_blank" class="btn-explore">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+              Explore
+            </a>
+          </div></div>
+          <div class="swiper-slide"><div class="project-card">
+            <div class="project-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 0 1-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 0 1-3 0m3 0a1.5 1.5 0 0 0-3 0m3 0h1.5c.66 0 1.2-.54 1.2-1.2v-2.4c0-.66-.54-1.2-1.2-1.2h-1.5m0 0V6.75c0-.66-.54-1.2-1.2-1.2h-1.5"/></svg></div>
+            <h3>Car Inspection</h3>
+            <p>Vehicle history</p>
+            <a href="https://haseeb-zafar-804.github.io/Car-Inspection/" target="_blank" class="btn-explore">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+              Explore
+            </a>
+          </div></div>
+          <div class="swiper-slide"><div class="project-card">
+            <div class="project-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 21v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21m0 0h4.5V3.545M12.75 21h7.5V10.75M2.25 21h1.5m18 0h-18M2.25 9l4.5-1.636M18.75 3l-1.5.545m0 6.205 3 1m1.5.5-1.5-.5M6.75 7.364V3h-3v18m3-13.636 10.5-3.819" />
+            </svg>
             </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="project-card" style="margin:0 4px;">
-              <div style="padding: 30px 20px; text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
-                <i class="fas fa-chart-pie" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
-                <h3>Fintech Dashboard</h3>
-                <p style="color: var(--text-secondary);">Interactive analytics hub with real-time data.</p>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="project-card" style="margin:0 4px;">
-              <div style="padding: 30px 20px; text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
-                <i class="fas fa-gem" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
-                <h3>Luxury Rebrand</h3>
-                <p style="color: var(--text-secondary);">Complete visual identity for a premium hospitality group.</p>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="project-card" style="margin:0 4px;">
-              <div style="padding: 30px 20px; text-align: center; min-height: 280px; display: flex; flex-direction: column; justify-content: center;">
-                <i class="fas fa-robot" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
-                <h3>AI Chatbot</h3>
-                <p style="color: var(--text-secondary);">Intelligent customer support solution for SaaS.</p>
-              </div>
-            </div>
-          </div>
+            <h3>Restaurant</h3>
+            <p>Menu showcase</p>
+            <a href="https://haseeb-zafar-804.github.io/haseebcollection/restaurant.html" target="_blank" class="btn-explore">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+              Explore
+            </a>
+          </div></div>
+          <div class="swiper-slide"><div class="project-card">
+            <div class="project-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 0 0-.491 6.347A48.627 48.627 0 0 1 12 20.904a48.627 48.627 0 0 1 8.232-4.41 60.46 60.46 0 0 0-.491-6.347m-15.482 0a50.57 50.57 0 0 0-2.658-.813A59.905 59.905 0 0 1 12 3.493a59.902 59.902 0 0 1 10.399 5.84c-.896.248-1.783.52-2.658.814m-15.482 0A50.697 50.697 0 0 1 12 13.489a50.702 50.702 0 0 1 7.74-3.342M6.75 15a.75.75 0 1 0 0-1.5.75.75 0 0 0 0 1.5zm0 0v-3.675A55.378 55.378 0 0 1 12 8.443m-7.007 11.55A5.25 5.25 0 0 0 9.75 21h4.5a5.25 5.25 0 0 0 5.25-5.25V10.5"/></svg></div>
+            <h3>Elite Academy</h3>
+            <p>Online courses</p>
+            <a href="https://haseeb-zafar-804.github.io/eliteacademy/" target="_blank" class="btn-explore">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+              Explore
+            </a>
+          </div></div>
+          <div class="swiper-slide"><div class="project-card">
+            <div class="project-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582m15.686 0A11.953 11.953 0 0 1 12 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0 1 21 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0 1 12 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 0 1 3 12c0-1.605.42-3.113 1.157-4.418"/></svg></div>
+            <h3>Digital Hub</h3>
+            <p>Admission portal</p>
+            <a href="https://haseeb-zafar-804.github.io/Digital-Hub/" target="_blank" class="btn-explore">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+              Explore
+            </a>
+          </div></div>
+          <div class="swiper-slide"><div class="project-card">
+            <div class="project-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 0 0-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 0 0 3.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 0 0 3.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 0 0-3.09 3.09z"/></svg></div>
+            <h3>Manahil Textile</h3>
+            <p>Luxury pret</p>
+            <a href="https://haseeb-zafar-804.github.io/Manahil/" target="_blank" class="btn-explore">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 6H5.25A2.25 2.25 0 0 0 3 8.25v10.5A2.25 2.25 0 0 0 5.25 21h10.5A2.25 2.25 0 0 0 18 18.75V10.5m-10.5 6L21 3m0 0h-5.25M21 3v5.25"/></svg>
+              Explore
+            </a>
+          </div></div>
         </div>
         <div class="swiper-button-next"></div>
         <div class="swiper-button-prev"></div>
@@ -550,52 +692,81 @@
     </div>
   </section>
 
-  <!-- PORTFOLIO with functional arrows -->
-  <section id="portfolio" style="background: var(--bg-secondary);">
+  <!-- BLOG -->
+  <section id="blog" style="background: var(--bg-secondary);">
     <div class="container">
-      <div class="section-header" data-aos="fade-up"><h2>Selected Works</h2><p>Where creativity meets engineering precision.</p></div>
-      <div class="swiper portfolio-swiper" style="overflow:hidden; padding: 10px 0; position:relative;">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide">
-            <div class="portfolio-item" style="margin:0 4px;">
-              <div style="padding: 30px 20px; text-align: center; min-height: 260px; display: flex; flex-direction: column; justify-content: center;">
-                <i class="fas fa-chart-line" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
-                <h3>Fintech Dashboard</h3>
-                <p style="color: var(--text-secondary);">Interactive analytics platform</p>
-              </div>
-            </div>
+      <div class="section-header" data-aos="fade-up"><h2>Insights & Ideas</h2><p>Stories, strategies, and trends from the digital frontier.</p></div>
+      <div class="blog-grid">
+        <div class="blog-card" data-aos="fade-up" data-aos-delay="100">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75z"/></svg>
+          <h3>Why Branding Matters</h3>
+          <div class="blog-meta">May 12, 2025 · 5 min read</div>
+          <p style="color: var(--text-secondary);">Discover how a strong brand identity can transform your business and build trust.</p>
+        </div>
+        <div class="blog-card" data-aos="fade-up" data-aos-delay="200">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5"/></svg>
+          <h3>Web Dev Trends 2025</h3>
+          <div class="blog-meta">April 28, 2025 · 7 min read</div>
+          <p style="color: var(--text-secondary);">From AI-driven design to motion UI — the future of web development is here.</p>
+        </div>
+        <div class="blog-card" data-aos="fade-up" data-aos-delay="300">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 3v11.25A2.25 2.25 0 0 0 6 16.5h2.25M3.75 3h-1.5m1.5 0h16.5m0 0h1.5m-1.5 0v11.25A2.25 2.25 0 0 1 18 16.5h-2.25m-7.5 0h7.5m-7.5 0l-1 3m8.5-3l1 3m0 0l.5 1.5m-.5-1.5h-9.5m0 0l-.5 1.5m.75-9l3-3 2.148 2.148A12.035 12.035 0 0 1 16.5 7.5"/></svg>
+          <h3>Growth Hacking 101</h3>
+          <div class="blog-meta">April 10, 2025 · 6 min read</div>
+          <p style="color: var(--text-secondary);">Actionable strategies to scale your business using data and creativity.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ SECTION -->
+  <section id="faq" style="background: var(--bg-secondary); padding: 100px 0; position: relative;">
+    <div class="container">
+      <div class="section-header" data-aos="fade-up" style="margin-bottom: 60px;">
+        <h2 style="font-size: 2.8rem; margin-bottom: 1rem; background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block;">Frequently Asked Questions</h2>
+        <p style="color: var(--text-secondary); font-size: 1.2rem; max-width: 600px; margin-top: 12px;">Quick answers to common queries about our services.</p>
+      </div>
+      <div data-aos="fade-up" style="max-width: 800px; margin: 0 auto;">
+        <!-- FAQ Item 1 -->
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+            <span>What services do you offer?</span>
+            <i class="fas fa-chevron-down"></i>
           </div>
-          <div class="swiper-slide">
-            <div class="portfolio-item" style="margin:0 4px;">
-              <div style="padding: 30px 20px; text-align: center; min-height: 260px; display: flex; flex-direction: column; justify-content: center;">
-                <i class="fas fa-crown" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
-                <h3>Luxury Rebrand</h3>
-                <p style="color: var(--text-secondary);">Visual identity system</p>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="portfolio-item" style="margin:0 4px;">
-              <div style="padding: 30px 20px; text-align: center; min-height: 260px; display: flex; flex-direction: column; justify-content: center;">
-                <i class="fas fa-store" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
-                <h3>E‑commerce Suite</h3>
-                <p style="color: var(--text-secondary);">Headless commerce solution</p>
-              </div>
-            </div>
-          </div>
-          <div class="swiper-slide">
-            <div class="portfolio-item" style="margin:0 4px;">
-              <div style="padding: 30px 20px; text-align: center; min-height: 260px; display: flex; flex-direction: column; justify-content: center;">
-                <i class="fas fa-palette" style="font-size: 3rem; color: var(--accent-green); margin-bottom: 1rem;"></i>
-                <h3>Creative Branding</h3>
-                <p style="color: var(--text-secondary);">Complete brand identity package</p>
-              </div>
-            </div>
+          <div class="faq-answer">
+            <p>We offer web development, graphic design, UI/UX design, and marketing strategy services tailored to your business needs.</p>
           </div>
         </div>
-        <div class="swiper-button-next"></div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-pagination" style="position:relative; margin-top:20px;"></div>
+        <!-- FAQ Item 2 -->
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+            <span>How much does a website cost?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Our pricing starts from $299 for a basic responsive website. Custom projects are quoted based on scope and complexity.</p>
+          </div>
+        </div>
+        <!-- FAQ Item 3 -->
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+            <span>Do you offer support after launch?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>Yes, we provide 30 days of free support post-launch, with optional maintenance packages available.</p>
+          </div>
+        </div>
+        <!-- FAQ Item 4 -->
+        <div class="faq-item">
+          <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
+            <span>How long does it take to build a website?</span>
+            <i class="fas fa-chevron-down"></i>
+          </div>
+          <div class="faq-answer">
+            <p>A standard website takes 2-4 weeks, depending on features and content complexity. We'll provide a timeline during consultation.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
@@ -607,58 +778,26 @@
       <div class="testimonial-wrapper" data-aos="fade-up">
         <div class="swiper testimonial-swiper" style="overflow:hidden; padding: 10px 0 30px;">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <div class="testimonial-card-pro">
-                <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
-                <p>“Website of Pakistan delivered a next-gen platform that increased our user engagement by 210%. They are true partners in growth.”</p>
-                <div class="author">
-                  <div class="author-avatar">AC</div>
-                  <div class="author-info">
-                    <h4>Aria Chen</h4>
-                    <span>CTO, Nexify</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="testimonial-card-pro">
-                <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
-                <p>“The team's strategic vision and execution are unparalleled. They turned our brand into a market leader with their creative force.”</p>
-                <div class="author">
-                  <div class="author-avatar">MV</div>
-                  <div class="author-info">
-                    <h4>Marcus V.</h4>
-                    <span>Founder, Lumina</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="testimonial-card-pro">
-                <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
-                <p>“Incredible design & development — they transformed our vision into a stunning digital experience that truly resonates with our audience.”</p>
-                <div class="author">
-                  <div class="author-avatar">SR</div>
-                  <div class="author-info">
-                    <h4>Sofia R.</h4>
-                    <span>Creative Director</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="swiper-slide">
-              <div class="testimonial-card-pro">
-                <div class="quote-icon"><i class="fas fa-quote-right"></i></div>
-                <p>“Working with Website of Pakistan was a game-changer. Their deep expertise in UI/UX and branding gave us a massive competitive edge.”</p>
-                <div class="author">
-                  <div class="author-avatar">JL</div>
-                  <div class="author-info">
-                    <h4>James L.</h4>
-                    <span>CEO, Vantage</span>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <div class="swiper-slide"><div class="testimonial-card-pro">
+              <div class="quote-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m7.5 7.5L12 3m0 0L4.5 3m7.5 0l7.5 7.5M12 3v18"/></svg></div>
+              <p>“Website of Pakistan delivered a next-gen platform that increased our user engagement by 210%. They are true partners in growth.”</p>
+              <div class="author"><div class="author-avatar">AC</div><div class="author-info"><h4>Aria Chen</h4><span>CTO, Nexify</span></div></div>
+            </div></div>
+            <div class="swiper-slide"><div class="testimonial-card-pro">
+              <div class="quote-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m7.5 7.5L12 3m0 0L4.5 3m7.5 0l7.5 7.5M12 3v18"/></svg></div>
+              <p>“The team's strategic vision and execution are unparalleled. They turned our brand into a market leader with their creative force.”</p>
+              <div class="author"><div class="author-avatar">MV</div><div class="author-info"><h4>Marcus V.</h4><span>Founder, Lumina</span></div></div>
+            </div></div>
+            <div class="swiper-slide"><div class="testimonial-card-pro">
+              <div class="quote-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m7.5 7.5L12 3m0 0L4.5 3m7.5 0l7.5 7.5M12 3v18"/></svg></div>
+              <p>“Incredible design & development — they transformed our vision into a stunning digital experience that truly resonates with our audience.”</p>
+              <div class="author"><div class="author-avatar">SR</div><div class="author-info"><h4>Sofia R.</h4><span>Creative Director</span></div></div>
+            </div></div>
+            <div class="swiper-slide"><div class="testimonial-card-pro">
+              <div class="quote-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m7.5 7.5L12 3m0 0L4.5 3m7.5 0l7.5 7.5M12 3v18"/></svg></div>
+              <p>“Working with Website of Pakistan was a game-changer. Their deep expertise in UI/UX and branding gave us a massive competitive edge.”</p>
+              <div class="author"><div class="author-avatar">JL</div><div class="author-info"><h4>James L.</h4><span>CEO, Vantage</span></div></div>
+            </div></div>
           </div>
           <div class="swiper-pagination"></div>
         </div>
@@ -671,7 +810,10 @@
     <div class="container" data-aos="zoom-in">
       <h2 style="font-size: 3rem;">Ready to grow your business?</h2>
       <p style="margin: 20px auto; max-width: 600px; color: var(--text-secondary);">Get a responsive website, professional design, and a marketing strategy — all at a reasonable price.</p>
-      <a href="#contact" class="btn btn-primary" style="margin-top: 20px;"><i class="fas fa-paper-plane"></i> Get a Free Quote</a>
+      <a href="#contact" class="btn btn-primary" style="margin-top: 20px;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.75 13.5l10.5-10.5L3.75 3l-3 7.5 3 3z"/><path d="M21 21l-6-6"/></svg>
+        Get a Free Quote
+      </a>
     </div>
   </section>
 
@@ -682,15 +824,22 @@
       <div class="contact-grid">
         <div data-aos="fade-right">
           <div style="background: var(--bg-elevated); padding: 2rem; border-radius: var(--border-radius);">
-            <i class="fas fa-map-pin" style="font-size: 2rem; color: var(--accent-green);"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0z"/></svg>
             <h3>Global HQ</h3>
             <p>Digital District, Innovation Hub, PK 54000</p>
             <hr style="border-color:var(--border-subtle); margin: 20px 0;" />
-            <i class="fas fa-envelope" style="color: var(--accent-green);"></i> <span>websiteofpakistan@gmail.com</span><br />
-            <i class="fab fa-whatsapp" style="color: var(--accent-green);"></i> <strong>+92 336 1871497</strong>
+            <div style="margin-bottom:8px;">
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><path d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+              <span>websiteofpakistan@gmail.com</span>
+            </div>
+            <div>
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:middle;margin-right:8px;"><path d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.362-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25z"/></svg>
+              <strong>+92 336 1871497</strong>
+            </div>
             <div style="margin-top: 20px;">
               <a href="https://wa.me/923361871497" target="_blank" class="btn btn-primary" style="width:100%; justify-content:center;">
-                <i class="fab fa-whatsapp"></i> Chat on WhatsApp
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                Chat on WhatsApp
               </a>
             </div>
           </div>
@@ -701,7 +850,10 @@
             <input type="email" class="form-input" placeholder="Email" required style="margin-top: 16px;" />
             <input type="tel" class="form-input" placeholder="Phone number" style="margin-top: 16px;" />
             <textarea class="form-input" rows="4" placeholder="Tell us about your project..." style="margin-top: 16px;"></textarea>
-            <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 20px;">Send Inquiry <i class="fas fa-arrow-right"></i></button>
+            <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 20px;">
+              Send Inquiry
+              <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
+            </button>
             <div id="formStatus" style="margin-top: 16px;"></div>
           </form>
         </div>
@@ -715,45 +867,33 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-about">
-        <div class="footer-logo">
-          <img src="Website of .png" alt="Website of Pakistan Logo" />
-        </div>
+        <div class="footer-logo"><img src="Website of .png" alt="Website of Pakistan Logo" /></div>
         <p>Redefining the digital frontier with visionary craftsmanship. We blend creativity, technology, and strategy to build iconic brands.</p>
         <div class="social-links">
-          <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
-          <a href="#" class="social-icon"><i class="fab fa-dribbble"></i></a>
+          <a href="#" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
+          <a href="#" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+          <a href="#" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg></a>
+          <a href="#" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg></a>
+          <a href="#" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 0C5.373 0 0 5.373 0 12c0 5.302 3.438 9.8 8.205 11.387.6.113.82-.26.82-.58 0-.287-.01-1.05-.015-2.06-3.338.726-4.042-1.61-4.042-1.61-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.082-.73.082-.73 1.205.085 1.838 1.237 1.838 1.237 1.07 1.834 2.807 1.304 3.492.997.108-.775.418-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.468-2.38 1.235-3.22-.123-.3-.535-1.52.117-3.16 0 0 1.008-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.29-1.552 3.297-1.23 3.297-1.23.653 1.64.24 2.86.118 3.16.768.84 1.233 1.91 1.233 3.22 0 4.61-2.804 5.62-5.476 5.92.43.37.824 1.102.824 2.22 0 1.602-.015 2.894-.015 3.287 0 .322.216.698.825.58C20.565 21.795 24 17.3 24 12c0-6.627-5.373-12-12-12z"/></svg></a>
         </div>
       </div>
-      <div>
-        <h4 class="footer-title">Explore</h4>
-        <ul class="footer-links-list">
-          <li><a href="#home">Home</a></li>
-          <li><a href="#about">About Us</a></li>
-          <li><a href="#services">Services</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#portfolio">Portfolio</a></li>
-          <li><a href="#contact">Contact</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4 class="footer-title">Services</h4>
-        <ul class="footer-links-list">
-          <li><a href="#">Web Development</a></li>
-          <li><a href="#">Graphic Design</a></li>
-          <li><a href="#">Marketing Strategy</a></li>
-          <li><a href="#">UI/UX Design</a></li>
-          <li><a href="#">Branding</a></li>
-        </ul>
-      </div>
+      <div><h4 class="footer-title">Explore</h4><ul class="footer-links-list"><li><a href="#home">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#services">Services</a></li><li><a href="#team">Team</a></li><li><a href="#projects">Projects</a></li><li><a href="#blog">Blog</a></li><li><a href="#contact">Contact</a></li></ul></div>
+      <div><h4 class="footer-title">Services</h4><ul class="footer-links-list"><li><a href="#">Web Development</a></li><li><a href="#">Graphic Design</a></li><li><a href="#">Marketing Strategy</a></li><li><a href="#">UI/UX Design</a></li><li><a href="#">Branding</a></li></ul></div>
       <div>
         <h4 class="footer-title">Contact</h4>
         <div class="footer-contact-info">
-          <p><i class="fas fa-envelope"></i> websiteofpakistan@gmail.com</p>
-          <p><i class="fab fa-whatsapp"></i> +92 336 1871497</p>
-          <p><i class="fas fa-map-pin"></i> Digital District, PK</p>
+          <p>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 0 1-2.25 2.25h-15a2.25 2.25 0 0 1-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25m19.5 0v.243a2.25 2.25 0 0 1-1.07 1.916l-7.5 4.615a2.25 2.25 0 0 1-2.36 0L3.32 8.91a2.25 2.25 0 0 1-1.07-1.916V6.75"/></svg>
+            websiteofpakistan@gmail.com
+          </p>
+          <p>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 0 1-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.362-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 0 0-1.091-.852H4.5A2.25 2.25 0 0 0 2.25 4.5v2.25z"/></svg>
+            +92 336 1871497
+          </p>
+          <p>
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1 1 15 0z"/></svg>
+            Digital District, PK
+          </p>
         </div>
         <div style="margin-top: 20px;">
           <h4 class="footer-title" style="margin-bottom:12px;">Stay Updated</h4>
@@ -765,9 +905,7 @@
         </div>
       </div>
     </div>
-    <div class="footer-bottom">
-      <p>&copy; 2025 Website of Pakistan — Professional Digital Agency. All rights reserved.</p>
-    </div>
+    <div class="footer-bottom"><p>&copy; 2025 Website of Pakistan — Professional Digital Agency. All rights reserved.</p></div>
   </div>
 </footer>
 
@@ -793,30 +931,22 @@
   });
   backTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
+  // Projects Swiper with autoplay (4s)
   new Swiper('.projects-swiper', {
     loop: true,
     slidesPerView: 1,
     spaceBetween: 20,
     pagination: { el: '.projects-swiper .swiper-pagination', clickable: true },
     navigation: { nextEl: '.projects-swiper .swiper-button-next', prevEl: '.projects-swiper .swiper-button-prev' },
-    breakpoints: { 640: { slidesPerView: 2, spaceBetween: 20 }, 1024: { slidesPerView: 3, spaceBetween: 30 } }
+    breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
+    autoplay: { delay: 4000, disableOnInteraction: false }
   });
 
-  new Swiper('.portfolio-swiper', {
-    loop: true,
-    slidesPerView: 1,
-    spaceBetween: 20,
-    pagination: { el: '.portfolio-swiper .swiper-pagination', clickable: true },
-    navigation: { nextEl: '.portfolio-swiper .swiper-button-next', prevEl: '.portfolio-swiper .swiper-button-prev' },
-    breakpoints: { 640: { slidesPerView: 2, spaceBetween: 20 }, 1024: { slidesPerView: 3, spaceBetween: 30 } }
-  });
-
+  // Testimonials Swiper
   new Swiper('.testimonial-swiper', { 
-    loop: true, 
-    autoplay: { delay: 4500, disableOnInteraction: true }, 
+    loop: true, autoplay: { delay: 4500, disableOnInteraction: true }, 
     pagination: { el: '.testimonial-swiper .swiper-pagination', clickable: true }, 
-    slidesPerView: 1, 
-    spaceBetween: 30, 
+    slidesPerView: 1, spaceBetween: 30, 
     breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } 
   });
 
