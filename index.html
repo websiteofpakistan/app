@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Website of Pakistan · Pro Agency</title>
-  <!-- Google Fonts -->
+  <!-- Google Fonts - Preload to reduce layout shift -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet" />
-  <!-- Swiper & AOS -->
+  <!-- Swiper & AOS - Defer loading -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
   <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
@@ -55,12 +57,14 @@
     .section-header { margin-bottom: 60px; }
     .section-header p { color: var(--text-secondary); font-size: 1.2rem; max-width: 600px; margin-top: 12px; }
 
-    /* LOADER */
+    /* LOADER - Hidden immediately after load */
     .loader-wrapper {
       position: fixed; top:0; left:0; width:100%; height:100%;
       background: var(--bg-primary); display:flex; justify-content:center; align-items:center;
-      z-index:10000; transition: opacity 0.6s ease;
+      z-index:10000; transition: opacity 0.3s ease;
+      pointer-events: none;
     }
+    .loader-wrapper.hidden { opacity: 0; }
     .loader { width:60px; height:60px; border:3px solid var(--border-subtle); border-top:3px solid var(--accent-green); border-radius:50%; animation: spin 1s cubic-bezier(0.68,-0.55,0.265,1.55) infinite; box-shadow:0 0 15px rgba(46,204,113,0.3); }
     @keyframes spin { to { transform: rotate(360deg); } }
 
@@ -86,9 +90,8 @@
     /* HERO */
     .hero { min-height:100vh; display:flex; align-items:center; position:relative; background:radial-gradient(circle at 80% 20%, rgba(46,204,113,0.08) 0%, rgba(11,14,23,0) 70%); padding-top:100px; }
     .hero-grid { display:grid; grid-template-columns:1fr 1fr; gap:4rem; align-items:center; }
-    .hero-title { font-size:4rem; font-weight:800; line-height:1.1; background:linear-gradient(to right, #FFF, #A9DFBF); -webkit-background-clip:text; background-clip:text; color:transparent; animation:fadeInUp 0.8s ease; }
+    .hero-title { font-size:4rem; font-weight:800; line-height:1.1; background:linear-gradient(to right, #FFF, #A9DFBF); -webkit-background-clip:text; background-clip:text; color:transparent; }
     .hero-title .highlight { background:var(--accent-gradient); -webkit-background-clip:text; background-clip:text; color:transparent; }
-    @keyframes fadeInUp { from { opacity:0; transform:translateY(30px); } to { opacity:1; transform:translateY(0); } }
     .hero-badge { display:inline-block; background:rgba(46,204,113,0.15); backdrop-filter:blur(4px); padding:6px 14px; border-radius:var(--border-radius); font-size:0.8rem; margin-bottom:1.5rem; border:1px solid rgba(46,204,113,0.3); color:var(--accent-green); }
     .btn { display:inline-flex; align-items:center; gap:10px; padding:14px 32px; border-radius:var(--border-radius); font-weight:600; transition:var(--transition); cursor:pointer; border:none; text-decoration:none; }
     .btn-primary { background:var(--accent-gradient); color:#0B0E17; box-shadow:0 8px 20px rgba(46,204,113,0.3); }
@@ -101,7 +104,6 @@
       border-radius: var(--border-radius);
       height: 500px;
       position: relative;
-      animation: fadeInRight 0.9s ease;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -125,7 +127,6 @@
       z-index: 2;
     }
     .hero-image-area h3 { font-size: 2.5rem; color: var(--accent-green); margin-bottom: 1rem; }
-    @keyframes fadeInRight { from { opacity:0; transform:translateX(40px); } to { opacity:1; transform:translateX(0); } }
 
     /* CARDS */
     .service-card, .project-card, .blog-card { background:var(--bg-card); border-radius:var(--border-radius); border:1px solid var(--border-subtle); transition:var(--transition); overflow:hidden; }
@@ -485,9 +486,7 @@
       padding: 0 1.8rem 1.5rem;
     }
 
-    /* ===================== */
-    /* NEW: PROFESSIONAL TEAM SECTION (replaces individual team) */
-    /* ===================== */
+    /* TEAM PROFESSIONAL */
     .team-professional {
       background: linear-gradient(145deg, #0F121C, #131724);
       border-radius: var(--border-radius);
@@ -572,9 +571,7 @@
       border-color: var(--accent-green);
     }
 
-    /* ===================== */
     /* RESPONSIVE */
-    /* ===================== */
     @media (max-width: 1200px) {
       .footer-grid { grid-template-columns: 2fr 1fr 1fr; gap: 30px; }
     }
@@ -645,7 +642,8 @@
   </style>
 </head>
 <body>
-<div class="loader-wrapper"><div class="loader"></div></div>
+<!-- LOADER - hidden by default (loads quickly) -->
+<div class="loader-wrapper hidden"><div class="loader"></div></div>
 
 <!-- WhatsApp Float -->
 <a href="https://wa.me/923361871497?text=Hello%20Website%20of%20Pakistan%20—%20I%20need%20a%20professional%20website!" class="whatsapp-float" target="_blank">
@@ -706,7 +704,7 @@
         </div>
       </div>
       <div class="hero-image-area float-animation" data-aos="fade-left" data-aos-duration="1000">
-        <img src="https://static.vecteezy.com/system/resources/thumbnails/027/309/218/small_2x/online-education-with-ai-generated-free-png.png" alt="Web Development & AI Services" />
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/027/309/218/small_2x/online-education-with-ai-generated-free-png.png" alt="Web Development & AI Services" loading="lazy" />
         <div class="content"></div>
       </div>
     </div>
@@ -808,7 +806,7 @@
     </div>
   </section>
 
-  <!-- TEAM - NEW PROFESSIONAL TEAM SECTION (no individual names) -->
+  <!-- TEAM -->
   <section id="team">
     <div class="container">
       <div class="team-professional" data-aos="fade-up">
@@ -846,7 +844,7 @@
     </div>
   </section>
 
-  <!-- PROJECTS - SLIDING CARDS -->
+  <!-- PROJECTS -->
   <section id="projects">
     <div class="container">
       <div class="section-header" data-aos="fade-up"><h2>Featured Projects</h2><p>Explore our live demos — real-world solutions built with precision.</p></div>
@@ -953,7 +951,7 @@
     </div>
   </section>
 
-  <!-- FAQ SECTION -->
+  <!-- FAQ -->
   <section id="faq" style="background: var(--bg-secondary); padding: 100px 0; position: relative;">
     <div class="container">
       <div class="section-header" data-aos="fade-up" style="margin-bottom: 60px;">
@@ -961,7 +959,6 @@
         <p style="color: var(--text-secondary); font-size: 1.2rem; max-width: 600px; margin-top: 12px;">Quick answers to common queries about our services.</p>
       </div>
       <div data-aos="fade-up" style="max-width: 800px; margin: 0 auto;">
-        <!-- FAQ Item 1 -->
         <div class="faq-item">
           <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
             <span>What services do you offer?</span>
@@ -971,7 +968,6 @@
             <p>We offer web development, graphic design, UI/UX design, and marketing strategy services tailored to your business needs.</p>
           </div>
         </div>
-        <!-- FAQ Item 2 -->
         <div class="faq-item">
           <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
             <span>How much does a website cost?</span>
@@ -981,7 +977,6 @@
             <p>Our pricing starts from $299 for a basic responsive website. Custom projects are quoted based on scope and complexity.</p>
           </div>
         </div>
-        <!-- FAQ Item 3 -->
         <div class="faq-item">
           <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
             <span>Do you offer support after launch?</span>
@@ -991,7 +986,6 @@
             <p>Yes, we provide 30 days of free support post-launch, with optional maintenance packages available.</p>
           </div>
         </div>
-        <!-- FAQ Item 4 -->
         <div class="faq-item">
           <div class="faq-question" onclick="this.parentElement.classList.toggle('active')">
             <span>How long does it take to build a website?</span>
@@ -1012,28 +1006,21 @@
       <div class="testimonial-wrapper" data-aos="fade-up">
         <div class="swiper testimonial-swiper" style="overflow:hidden; padding: 10px 0 30px;">
           <div class="swiper-wrapper">
-            <!-- Client 1: Lahore -->
             <div class="swiper-slide"><div class="testimonial-card-pro">
               <div class="quote-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m7.5 7.5L12 3m0 0L4.5 3m7.5 0l7.5 7.5M12 3v18"/></svg></div>
               <p>“Website of Pakistan delivered a next-gen e‑commerce platform that increased our online sales by 210%. They are true partners in growth.”</p>
               <div class="author"><div class="author-avatar">AK</div><div class="author-info"><h4>Ahmed Khan</h4><span>CEO, Nexify Lahore · Jan 2026</span></div></div>
             </div></div>
-            
-            <!-- Client 2: Karachi -->
             <div class="swiper-slide"><div class="testimonial-card-pro">
               <div class="quote-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m7.5 7.5L12 3m0 0L4.5 3m7.5 0l7.5 7.5M12 3v18"/></svg></div>
               <p>“The team's strategic vision and execution are unmatched. They turned our textile brand into a market leader with their creative force.”</p>
               <div class="author"><div class="author-avatar">MS</div><div class="author-info"><h4>Mariam Sheikh</h4><span>Founder, Lumina Textiles · Dec 2025</span></div></div>
             </div></div>
-            
-            <!-- Client 3: Islamabad -->
             <div class="swiper-slide"><div class="testimonial-card-pro">
               <div class="quote-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m7.5 7.5L12 3m0 0L4.5 3m7.5 0l7.5 7.5M12 3v18"/></svg></div>
               <p>“Incredible design & development — they transformed our real estate portal into a stunning digital experience that truly resonates with investors.”</p>
               <div class="author"><div class="author-avatar">SR</div><div class="author-info"><h4>Saima Riaz</h4><span>Creative Director, Islamabad · Feb 2026</span></div></div>
             </div></div>
-            
-            <!-- Client 4: Faisalabad -->
             <div class="swiper-slide"><div class="testimonial-card-pro">
               <div class="quote-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M4.5 10.5L12 3m7.5 7.5L12 3m0 0L4.5 3m7.5 0l7.5 7.5M12 3v18"/></svg></div>
               <p>“Working with Website of Pakistan was a game-changer. Their deep expertise in UI/UX and branding gave our restaurant chain a massive competitive edge.”</p>
@@ -1149,11 +1136,22 @@
   </div>
 </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
 <script>
-  AOS.init({ duration: 800, once: true, offset: 100 });
-  window.addEventListener('load', () => { document.querySelector('.loader-wrapper').style.opacity = '0'; setTimeout(() => { document.querySelector('.loader-wrapper').style.display = 'none'; }, 500); });
+  // Initialize AOS with reduced delay for faster appearance
+  document.addEventListener('DOMContentLoaded', function() {
+    AOS.init({ 
+      duration: 600, 
+      once: true, 
+      offset: 80,
+      // Disable animations on mobile to prevent layout shifts
+      disable: window.innerWidth < 768 ? true : false
+    });
+  });
+
+  // Hide loader immediately since it's hidden by default
+  // (loader-wrapper has hidden class)
 
   const hamburger = document.querySelector('.hamburger'), navMenu = document.querySelector('.nav-menu');
   hamburger?.addEventListener('click', () => { hamburger.classList.toggle('active'); navMenu.classList.toggle('active'); });
@@ -1171,23 +1169,26 @@
   });
   backTop?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
-  // Projects Swiper with autoplay (4s)
-  new Swiper('.projects-swiper', {
-    loop: true,
-    slidesPerView: 1,
-    spaceBetween: 20,
-    pagination: { el: '.projects-swiper .swiper-pagination', clickable: true },
-    navigation: { nextEl: '.projects-swiper .swiper-button-next', prevEl: '.projects-swiper .swiper-button-prev' },
-    breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
-    autoplay: { delay: 4000, disableOnInteraction: false }
-  });
+  // Initialize Swipers after DOM is ready
+  document.addEventListener('DOMContentLoaded', function() {
+    // Projects Swiper
+    new Swiper('.projects-swiper', {
+      loop: true,
+      slidesPerView: 1,
+      spaceBetween: 20,
+      pagination: { el: '.projects-swiper .swiper-pagination', clickable: true },
+      navigation: { nextEl: '.projects-swiper .swiper-button-next', prevEl: '.projects-swiper .swiper-button-prev' },
+      breakpoints: { 640: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } },
+      autoplay: { delay: 4000, disableOnInteraction: false }
+    });
 
-  // Testimonials Swiper
-  new Swiper('.testimonial-swiper', { 
-    loop: true, autoplay: { delay: 4500, disableOnInteraction: true }, 
-    pagination: { el: '.testimonial-swiper .swiper-pagination', clickable: true }, 
-    slidesPerView: 1, spaceBetween: 30, 
-    breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } 
+    // Testimonials Swiper
+    new Swiper('.testimonial-swiper', { 
+      loop: true, autoplay: { delay: 4500, disableOnInteraction: true }, 
+      pagination: { el: '.testimonial-swiper .swiper-pagination', clickable: true }, 
+      slidesPerView: 1, spaceBetween: 30, 
+      breakpoints: { 768: { slidesPerView: 2 }, 1024: { slidesPerView: 3 } } 
+    });
   });
 
   const form = document.getElementById('contactForm');
