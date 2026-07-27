@@ -21,8 +21,14 @@
       color: #FFFFFF;
       line-height: 1.6;
       overflow-x: hidden;
+      width: 100%;
+      position: relative;
     }
-    html { scroll-behavior: smooth; }
+    html { 
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      width: 100%;
+    }
     :root {
       --bg-primary: #0B0E17;
       --bg-secondary: #0F121C;
@@ -41,21 +47,43 @@
       --shadow-xl: 0 25px 40px -12px rgba(0,0,0,0.5);
       --border-radius: 4px;
       --transition: all 0.4s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+      --section-title-size: 2.8rem;
     }
     .container { width: 90%; max-width: 1400px; margin: 0 auto; padding: 0 20px; }
     section { padding: 100px 0; position: relative; }
     h1,h2,h3,h4 { font-weight: 700; line-height: 1.2; letter-spacing: -0.02em; }
-    h2 {
-      font-size: 2.8rem;
+    
+    /* --- UNIFIED SECTION TITLE STYLES --- */
+    .section-title {
+      font-size: var(--section-title-size);
+      font-weight: 800;
       margin-bottom: 1rem;
       background: var(--accent-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       display: inline-block;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
     }
-    .section-header { margin-bottom: 60px; }
-    .section-header p { color: var(--text-secondary); font-size: 1.2rem; max-width: 600px; margin-top: 12px; }
+    .section-subtitle {
+      color: var(--text-secondary);
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin-top: 12px;
+      line-height: 1.6;
+    }
+    .section-header {
+      margin-bottom: 60px;
+      text-align: left;
+    }
+    .section-header.text-center {
+      text-align: center;
+    }
+    .section-header.text-center .section-subtitle {
+      margin-left: auto;
+      margin-right: auto;
+    }
 
     /* LOADER - Hidden immediately */
     .loader-wrapper {
@@ -532,16 +560,19 @@
     .team-professional .team-icon:hover {
       transform: scale(1.1) rotate(8deg);
     }
-    .team-professional h2 {
-      font-size: 2.8rem;
+    .team-professional .team-title {
+      font-size: var(--section-title-size);
+      font-weight: 800;
       background: var(--accent-gradient);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       display: inline-block;
       margin-bottom: 0.5rem;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
     }
-    .team-professional p {
+    .team-professional .team-subtitle {
       color: var(--text-secondary);
       font-size: 1.2rem;
       max-width: 700px;
@@ -571,10 +602,24 @@
       border-color: var(--accent-green);
     }
 
-    /* AOS override - prevent FOUC */
+    /* CTA Section Title */
+    .cta-title {
+      font-size: var(--section-title-size);
+      font-weight: 800;
+      background: var(--accent-gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      display: inline-block;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    /* AOS override - prevent overflow issues */
     [data-aos] {
       opacity: 0;
       transition-property: opacity, transform;
+      will-change: transform, opacity;
     }
     [data-aos].aos-animate {
       opacity: 1;
@@ -603,11 +648,12 @@
       .contact-grid { grid-template-columns:1fr; gap:40px; }
       .about-graphic { min-height: 220px; }
       .about-grid { gap:40px; }
-      .team-professional h2 { font-size: 2.2rem; }
+      .team-professional .team-title { font-size: 2.2rem; }
+      :root { --section-title-size: 2.4rem; }
     }
     @media (max-width: 768px) {
       .container { width:94%; padding:0 12px; }
-      h2 { font-size:2rem; }
+      .section-title { font-size: 2rem; }
       .hero-title { font-size:2.5rem; }
       .section-header { margin-bottom:40px; }
       .services-grid, .blog-grid { gap:20px; }
@@ -630,9 +676,11 @@
       .footer-contact-info p { font-size: 0.85rem; }
       .newsletter-group input { min-width: 100px; }
       .team-professional { padding: 2.5rem 1.5rem; }
-      .team-professional h2 { font-size: 1.8rem; }
-      .team-professional p { font-size: 1rem; }
+      .team-professional .team-title { font-size: 1.8rem; }
+      .team-professional .team-subtitle { font-size: 1rem; }
       .team-professional .team-tags span { font-size: 0.75rem; padding: 6px 14px; }
+      .cta-title { font-size: 2rem; }
+      :root { --section-title-size: 2rem; }
     }
     @media (max-width: 576px) {
       .container { width:100%; padding:0 8px; }
@@ -649,8 +697,11 @@
       .hero-image-area { height:260px; }
       .newsletter-group { flex-direction: column; }
       .newsletter-group button { width: 100%; }
-      .team-professional h2 { font-size: 1.5rem; }
+      .team-professional .team-title { font-size: 1.5rem; }
       .team-professional .team-icon { width: 60px; height: 60px; font-size: 1.8rem; }
+      .cta-title { font-size: 1.5rem; }
+      .section-title { font-size: 1.5rem; }
+      :root { --section-title-size: 1.5rem; }
     }
   </style>
 </head>
@@ -687,7 +738,7 @@
 </header>
 
 <main>
-  <!-- HERO - AOS disabled here to prevent load shift -->
+  <!-- HERO -->
   <section class="hero" id="home">
     <div class="container hero-grid">
       <div>
@@ -739,7 +790,10 @@
   <!-- ABOUT -->
   <section id="about">
     <div class="container">
-      <div class="section-header" data-aos="fade-up"><h2>Where Vision Meets Execution</h2><p>Website of Pakistan is a collective of strategists, designers, and engineers obsessed with creating meaningful impact.</p></div>
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">Where Vision Meets Execution</h2>
+        <p class="section-subtitle">Website of Pakistan is a collective of strategists, designers, and engineers obsessed with creating meaningful impact.</p>
+      </div>
       <div class="about-grid">
         <div class="about-graphic-wrapper" data-aos="fade-right">
           <div class="about-graphic glow-pulse">
@@ -781,7 +835,10 @@
   <!-- SERVICES -->
   <section id="services" style="background: var(--bg-secondary);">
     <div class="container">
-      <div class="section-header" data-aos="fade-up"><h2>What We Offer</h2><p>Complete digital solutions to grow your business.</p></div>
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">What We Offer</h2>
+        <p class="section-subtitle">Complete digital solutions to grow your business.</p>
+      </div>
       <div class="services-grid">
         <div class="service-card" data-aos="zoom-in" data-aos-delay="100">
           <div class="service-icon">
@@ -828,8 +885,8 @@
           <div class="team-icon">
             <i class="fas fa-users"></i>
           </div>
-          <h2>We Work With Our Professional Team</h2>
-          <p>
+          <h2 class="team-title">We Work With Our Professional Team</h2>
+          <p class="team-subtitle">
             A dedicated collective of <strong style="color: var(--accent-green);">designers</strong>, 
             <strong style="color: var(--accent-green);">developers</strong>, and 
             <strong style="color: var(--accent-green);">strategists</strong> 
@@ -860,7 +917,10 @@
   <!-- PROJECTS -->
   <section id="projects">
     <div class="container">
-      <div class="section-header" data-aos="fade-up"><h2>Featured Projects</h2><p>Explore our live demos — real-world solutions built with precision.</p></div>
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">Featured Projects</h2>
+        <p class="section-subtitle">Explore our live demos — real-world solutions built with precision.</p>
+      </div>
       <div class="swiper projects-swiper" style="overflow:hidden; padding: 10px 0 40px; position:relative;">
         <div class="swiper-wrapper">
           <div class="swiper-slide"><div class="project-card">
@@ -940,7 +1000,10 @@
   <!-- BLOG -->
   <section id="blog" style="background: var(--bg-secondary);">
     <div class="container">
-      <div class="section-header" data-aos="fade-up"><h2>Insights & Ideas</h2><p>Stories, strategies, and trends from the digital frontier.</p></div>
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">Insights & Ideas</h2>
+        <p class="section-subtitle">Stories, strategies, and trends from the digital frontier.</p>
+      </div>
       <div class="blog-grid">
         <div class="blog-card" data-aos="fade-up" data-aos-delay="100">
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 12h16.5m-16.5 3.75h16.5M3.75 19.5h16.5M5.625 4.5h12.75a1.875 1.875 0 0 1 0 3.75H5.625a1.875 1.875 0 0 1 0-3.75z"/></svg>
@@ -967,9 +1030,9 @@
   <!-- FAQ -->
   <section id="faq" style="background: var(--bg-secondary); padding: 100px 0; position: relative;">
     <div class="container">
-      <div class="section-header" data-aos="fade-up" style="margin-bottom: 60px;">
-        <h2 style="font-size: 2.8rem; margin-bottom: 1rem; background: var(--accent-gradient); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block;">Frequently Asked Questions</h2>
-        <p style="color: var(--text-secondary); font-size: 1.2rem; max-width: 600px; margin-top: 12px;">Quick answers to common queries about our services.</p>
+      <div class="section-header text-center" data-aos="fade-up" style="margin-bottom: 60px;">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-subtitle" style="margin-left: auto; margin-right: auto;">Quick answers to common queries about our services.</p>
       </div>
       <div data-aos="fade-up" style="max-width: 800px; margin: 0 auto;">
         <div class="faq-item">
@@ -1015,7 +1078,10 @@
   <!-- TESTIMONIALS -->
   <section>
     <div class="container">
-      <div class="section-header" data-aos="fade-up"><h2>Voices of Excellence</h2><p>What our clients across Pakistan say about transformation.</p></div>
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">Voices of Excellence</h2>
+        <p class="section-subtitle">What our clients across Pakistan say about transformation.</p>
+      </div>
       <div class="testimonial-wrapper" data-aos="fade-up">
         <div class="swiper testimonial-swiper" style="overflow:hidden; padding: 10px 0 30px;">
           <div class="swiper-wrapper">
@@ -1049,8 +1115,8 @@
   <!-- CTA -->
   <section class="cta-glow" style="text-align: center;">
     <div class="container" data-aos="zoom-in">
-      <h2 style="font-size: 3rem;">Ready to grow your business?</h2>
-      <p style="margin: 20px auto; max-width: 600px; color: var(--text-secondary);">Get a responsive website, professional design, and a marketing strategy — all at a reasonable price.</p>
+      <h2 class="cta-title">Ready to grow your business?</h2>
+      <p style="margin: 20px auto; max-width: 600px; color: var(--text-secondary); font-size: 1.2rem;">Get a responsive website, professional design, and a marketing strategy — all at a reasonable price.</p>
       <a href="#contact" class="btn btn-primary" style="margin-top: 20px;">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3.75 13.5l10.5-10.5L3.75 3l-3 7.5 3 3z"/><path d="M21 21l-6-6"/></svg>
         Get a Free Quote
@@ -1061,7 +1127,10 @@
   <!-- CONTACT -->
   <section id="contact">
     <div class="container">
-      <div class="section-header" data-aos="fade-up"><h2>Let's Connect</h2><p>Your vision deserves elite execution. Reach out and let's build something great.</p></div>
+      <div class="section-header" data-aos="fade-up">
+        <h2 class="section-title">Let's Connect</h2>
+        <p class="section-subtitle">Your vision deserves elite execution. Reach out and let's build something great.</p>
+      </div>
       <div class="contact-grid">
         <div data-aos="fade-right">
           <div style="background: var(--bg-elevated); padding: 2rem; border-radius: var(--border-radius);">
@@ -1152,13 +1221,12 @@
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js" defer></script>
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
 <script>
-  // Initialize AOS - Now works on ALL devices (scroll to animate)
+  // Initialize AOS
   document.addEventListener('DOMContentLoaded', function() {
     AOS.init({ 
       duration: 700, 
       once: true, 
       offset: 100,
-      // Keep animations on ALL devices - this was the issue before
       disable: false
     });
   });
