@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Website of Pakistan - Your digital partner</title>
+  <!-- Favicon for tab logo -->
+  <link rel="icon" type="image/png" href="logo.png" />
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -223,8 +225,9 @@
       margin-bottom: 20px; 
       display: inline-block; 
     }
+    /* Footer logo size corrected to match header (70px) */
     .footer-logo img { 
-      height: 40px; 
+      height: 70px; 
       width: auto; 
       display: block; 
     }
@@ -721,8 +724,9 @@
 
 <header>
   <div class="container nav-container">
+    <!-- Logo replaced with logo.png -->
     <a href="#home" class="logo">
-      <img src="Website of .png" alt="Website of Pakistan Logo" />
+      <img src="logo.png" alt="Website of Pakistan Logo" />
     </a>
     <div class="hamburger"><span class="bar"></span><span class="bar"></span><span class="bar"></span></div>
     <ul class="nav-menu">
@@ -1124,7 +1128,7 @@
     </div>
   </section>
 
-  <!-- CONTACT -->
+  <!-- CONTACT (Let's Connect) -->
   <section id="contact">
     <div class="container">
       <div class="section-header" data-aos="fade-up">
@@ -1154,11 +1158,15 @@
           </div>
         </div>
         <div data-aos="fade-left">
-          <form id="contactForm">
-            <input type="text" class="form-input" placeholder="Full name" required />
-            <input type="email" class="form-input" placeholder="Email" required style="margin-top: 16px;" />
-            <input type="tel" class="form-input" placeholder="Phone number" style="margin-top: 16px;" />
-            <textarea class="form-input" rows="4" placeholder="Tell us about your project..." style="margin-top: 16px;"></textarea>
+          <!-- Web3Forms Contact Form -->
+          <form id="contactForm" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="9476f933-d4c7-4c44-8774-f20e265d17c2"/>
+            <input type="hidden" name="subject" value="New Contact Form Submission from Website of Pakistan" />
+            <input type="hidden" name="from_name" value="Website of Pakistan Contact Form" />
+            <input type="text" name="name" class="form-input" placeholder="Full name" required />
+            <input type="email" name="email" class="form-input" placeholder="Email" required style="margin-top: 16px;" />
+            <input type="tel" name="phone" class="form-input" placeholder="Phone number" style="margin-top: 16px;" />
+            <textarea name="message" class="form-input" rows="4" placeholder="Tell us about your project..." style="margin-top: 16px;"></textarea>
             <button type="submit" class="btn btn-primary" style="width:100%; margin-top: 20px;">
               Send Inquiry
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
@@ -1176,7 +1184,8 @@
   <div class="container">
     <div class="footer-grid">
       <div class="footer-about">
-        <div class="footer-logo"><img src="Website of .png" alt="Website of Pakistan Logo" /></div>
+        <!-- Footer logo replaced with logo.png, size corrected to 70px via CSS -->
+        <div class="footer-logo"><img src="logo.png" alt="Website of Pakistan Logo" /></div>
         <p>Redefining the digital frontier with visionary craftsmanship. We blend creativity, technology, and strategy to build iconic brands.</p>
         <div class="social-links">
           <a href="#" class="social-icon"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg></a>
@@ -1206,10 +1215,14 @@
         </div>
         <div style="margin-top: 20px;">
           <h4 class="footer-title" style="margin-bottom:12px;">Stay Updated</h4>
-          <div class="newsletter-group">
-            <input type="email" id="newsletterEmail" placeholder="Your email" />
-            <button id="newsletterBtn">Subscribe</button>
-          </div>
+          <!-- Web3Forms Newsletter Form -->
+          <form id="newsletterForm" action="https://api.web3forms.com/submit" method="POST" class="newsletter-group">
+            <input type="hidden" name="access_key" value="9476f933-d4c7-4c44-8774-f20e265d17c2"/>
+            <input type="hidden" name="subject" value="New Newsletter Subscription from Website of Pakistan" />
+            <input type="hidden" name="from_name" value="Website of Pakistan Newsletter" />
+            <input type="email" name="email" id="newsletterEmail" placeholder="Your email" required />
+            <button type="submit" id="newsletterBtn">Subscribe</button>
+          </form>
           <div id="newsletterMsg"></div>
         </div>
       </div>
@@ -1267,13 +1280,62 @@
     });
   });
 
-  const form = document.getElementById('contactForm');
-  const statusDiv = document.getElementById('formStatus');
-  form?.addEventListener('submit', (e) => { 
-    e.preventDefault(); 
-    statusDiv.innerHTML = '<span style="color:#2ECC71;">✨ Message received! Our team will respond within 12h.</span>'; 
-    form.reset(); 
-    setTimeout(() => statusDiv.innerHTML = '', 4000); 
+  // Web3Forms Contact Form handling
+  const contactForm = document.getElementById('contactForm');
+  const formStatus = document.getElementById('formStatus');
+  contactForm?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(contactForm);
+    formStatus.innerHTML = '<span style="color:#2ECC71;">⏳ Sending your message...</span>';
+    
+    fetch(contactForm.action, {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        formStatus.innerHTML = '<span style="color:#2ECC71;">✨ Message received! Our team will respond within 12h.</span>';
+        contactForm.reset();
+      } else {
+        formStatus.innerHTML = '<span style="color:#f87171;">❌ Error sending message. Please try again or email us directly.</span>';
+      }
+    })
+    .catch(error => {
+      formStatus.innerHTML = '<span style="color:#f87171;">❌ Network error. Please check your connection and try again.</span>';
+    })
+    .finally(() => {
+      setTimeout(() => { formStatus.innerHTML = ''; }, 5000);
+    });
+  });
+
+  // Web3Forms Newsletter Form handling
+  const newsletterForm = document.getElementById('newsletterForm');
+  const newsletterMsg = document.getElementById('newsletterMsg');
+  newsletterForm?.addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = new FormData(newsletterForm);
+    newsletterMsg.innerHTML = '<span style="color:#2ECC71;">⏳ Subscribing...</span>';
+    
+    fetch(newsletterForm.action, {
+      method: 'POST',
+      body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.success) {
+        newsletterMsg.innerHTML = '<span style="color:#2ECC71;">✅ Subscribed successfully!</span>';
+        document.getElementById('newsletterEmail').value = '';
+      } else {
+        newsletterMsg.innerHTML = '<span style="color:#f87171;">❌ Subscription failed. Please try again.</span>';
+      }
+    })
+    .catch(error => {
+      newsletterMsg.innerHTML = '<span style="color:#f87171;">❌ Network error. Please try again later.</span>';
+    })
+    .finally(() => {
+      setTimeout(() => { newsletterMsg.innerHTML = ''; }, 4000);
+    });
   });
 
   const sections = document.querySelectorAll('section');
@@ -1282,16 +1344,6 @@
     let current = '';
     sections.forEach(section => { const sectionTop = section.offsetTop - 200; if(scrollY >= sectionTop) current = section.getAttribute('id'); });
     navLinks.forEach(link => { link.classList.remove('active'); if(link.getAttribute('href') === `#${current}`) link.classList.add('active'); });
-  });
-
-  document.getElementById('newsletterBtn')?.addEventListener('click', () => {
-    const email = document.getElementById('newsletterEmail').value;
-    const msgDiv = document.getElementById('newsletterMsg');
-    if(email && email.includes('@')) {
-      msgDiv.innerHTML = '<span style="color:#2ECC71;">✅ Subscribed successfully!</span>';
-      document.getElementById('newsletterEmail').value = '';
-      setTimeout(() => msgDiv.innerHTML = '', 3000);
-    } else { msgDiv.innerHTML = '<span style="color:#f87171;">Please enter valid email</span>'; setTimeout(() => msgDiv.innerHTML = '', 2000); }
   });
 </script>
 </body>
