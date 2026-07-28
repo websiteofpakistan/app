@@ -1286,7 +1286,7 @@
   contactForm?.addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(contactForm);
-    formStatus.innerHTML = '<span style="color:#2ECC71;">⏳ Sending your message...</span>';
+    formStatus.innerHTML = '<span style="color:#2ECC71;"> Sending your message...</span>';
     
     fetch(contactForm.action, {
       method: 'POST',
@@ -1295,14 +1295,14 @@
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        formStatus.innerHTML = '<span style="color:#2ECC71;">✨ Message received! Our team will respond within 12h.</span>';
+        formStatus.innerHTML = '<span style="color:#2ECC71;"> Message received! Our team will respond within 12h.</span>';
         contactForm.reset();
       } else {
-        formStatus.innerHTML = '<span style="color:#f87171;">❌ Error sending message. Please try again or email us directly.</span>';
+        formStatus.innerHTML = '<span style="color:#f87171;"> Error sending message. Please try again or email us directly.</span>';
       }
     })
     .catch(error => {
-      formStatus.innerHTML = '<span style="color:#f87171;">❌ Network error. Please check your connection and try again.</span>';
+      formStatus.innerHTML = '<span style="color:#f87171;"> Network error. Please check your connection and try again.</span>';
     })
     .finally(() => {
       setTimeout(() => { formStatus.innerHTML = ''; }, 5000);
