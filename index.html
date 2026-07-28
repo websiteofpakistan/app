@@ -1315,7 +1315,7 @@
   newsletterForm?.addEventListener('submit', function(e) {
     e.preventDefault();
     const formData = new FormData(newsletterForm);
-    newsletterMsg.innerHTML = '<span style="color:#2ECC71;">⏳ Subscribing...</span>';
+    newsletterMsg.innerHTML = '<span style="color:#2ECC71;"> Subscribing...</span>';
     
     fetch(newsletterForm.action, {
       method: 'POST',
@@ -1324,14 +1324,14 @@
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        newsletterMsg.innerHTML = '<span style="color:#2ECC71;">✅ Subscribed successfully!</span>';
+        newsletterMsg.innerHTML = '<span style="color:#2ECC71;"> Subscribed successfully!</span>';
         document.getElementById('newsletterEmail').value = '';
       } else {
-        newsletterMsg.innerHTML = '<span style="color:#f87171;">❌ Subscription failed. Please try again.</span>';
+        newsletterMsg.innerHTML = '<span style="color:#f87171;"> Subscription failed. Please try again.</span>';
       }
     })
     .catch(error => {
-      newsletterMsg.innerHTML = '<span style="color:#f87171;">❌ Network error. Please try again later.</span>';
+      newsletterMsg.innerHTML = '<span style="color:#f87171;"> Network error. Please try again later.</span>';
     })
     .finally(() => {
       setTimeout(() => { newsletterMsg.innerHTML = ''; }, 4000);
